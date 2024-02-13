@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Polina Timonina](https://up.htmlacademy.ru/react/15/user/2009235).
-* Наставник: `Неизвестно`.
+* Наставник: [Алексей Козлов](https://htmlacademy.ru/profile/id1479859).
 
 ---
 
