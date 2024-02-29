@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import PlaceCard from '../../components/place-card/place-card';
+import OfferCard from '../../components/offer-card/offer-card';
 
 type MainScreenProps = {
   placeCardsCount: number;
@@ -71,7 +71,7 @@ function MainScreen({placeCardsCount}: MainScreenProps): JSX.Element {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {
-                  Array.from({length: placeCardsCount}, (_, index) => <PlaceCard key={index}/>)
+                  Array.from({length: placeCardsCount}, (_, index) => <OfferCard key={index}/>)
                 }
               </div>
             </section>
