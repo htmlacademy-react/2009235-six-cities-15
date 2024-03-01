@@ -39,3 +39,4 @@ export type OfferDetail = {
 
 //для GET /six-cities/offers/{offerId} убрать "previewImage" !!!
 export type Offer = OfferCard & OfferDetail;
+export type Offers = Offer[];

@@ -1,11 +1,12 @@
 import { Helmet } from 'react-helmet-async';
-import OfferCard from '../../components/offer-card/offer-card';
+import { Offers } from '../../types/offers';
+import OfferCardList from '../../components/offer-card-list/offer-card-list';
 
 type MainScreenProps = {
-  placeCardsCount: number;
+  offers: Offers;
 }
 
-function MainScreen({placeCardsCount}: MainScreenProps): JSX.Element {
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   return (
     <>
       <Helmet>
@@ -70,9 +71,7 @@ function MainScreen({placeCardsCount}: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                {
-                  Array.from({length: placeCardsCount}, (_, index) => <OfferCard key={index}/>)
-                }
+                <OfferCardList offers={offers}/>
               </div>
             </section>
             <div className="cities__right-section">

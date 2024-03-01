@@ -1,6 +1,6 @@
-import { Offer } from '../types/offers';
+import { Offers } from '../types/offers';
 
-export const offers : Offer[] = [
+export const offers : Offers = [
   {
     'id': 'f5d95974-342e-4837-be2d-814ead90908e',
     'title': 'The Pondhouse - A Magical Place',
@@ -202,7 +202,7 @@ export const offers : Offer[] = [
     },
     'isPremium': false,
     'isFavorite': false,
-    'rating': 2.3,
+    'rating': 2.4,
     'bedrooms': 3,
     'maxAdults': 2
   }

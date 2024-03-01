@@ -8,12 +8,13 @@ import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found
 import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
+import { Offers } from '../../types/offers';
 
 type AppScreenProps = {
-  placeCardsCount: number;
+  offers: Offers;
 }
 
-function App({placeCardsCount}:AppScreenProps): JSX.Element {
+function App({offers}:AppScreenProps): JSX.Element {
   const authorizationStatus = AuthorizationStatus.NoAuth;
 
   return (
@@ -23,7 +24,7 @@ function App({placeCardsCount}:AppScreenProps): JSX.Element {
           <Route path={AppRoute.Main} element={<Layout authorizationStatus={authorizationStatus}/>}>
             <Route
               index
-              element={<MainScreen placeCardsCount={placeCardsCount} />}
+              element={<MainScreen offers={offers} />}
             />
 
             <Route path={AppRoute.Offer} element={<OfferScreen/>} />
