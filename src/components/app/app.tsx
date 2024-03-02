@@ -15,7 +15,8 @@ type AppScreenProps = {
 }
 
 function App({offers}:AppScreenProps): JSX.Element {
-  const authorizationStatus = AuthorizationStatus.NoAuth;
+  const authorizationStatus = AuthorizationStatus.Auth;
+  const favoritesOffers = offers.filter(({ isFavorite }) => isFavorite);
 
   return (
     <HelmetProvider>
@@ -34,7 +35,7 @@ function App({offers}:AppScreenProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute authorizationStatus={authorizationStatus}>
-                  <FavoritesScreen/>
+                  <FavoritesScreen offers={favoritesOffers}/>
                 </PrivateRoute>
               }
             />
