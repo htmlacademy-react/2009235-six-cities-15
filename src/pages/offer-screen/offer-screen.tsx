@@ -1,6 +1,19 @@
 import { Helmet } from 'react-helmet-async';
+import { useParams } from 'react-router-dom';
+import { offers } from '../../mocks/offers';
+import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
+import OfferRating from '../../components/offer-rating/offer-rating';
+
 
 function OfferScreen(): JSX.Element {
+  const {id} = useParams();
+  const currentOffer = offers.find((offer) => offer.id === id);
+
+  if (!currentOffer) {
+    return (<PageNotFoundScreen/>);
+  }
+
+  const {host, rating} = currentOffer;
   return (
     <>
       <Helmet>
@@ -46,13 +59,7 @@ function OfferScreen(): JSX.Element {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}} />
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="offer__rating-value rating__value">4.8</span>
-              </div>
+              <OfferRating rating={rating} className='offer' />
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
               Apartment
@@ -109,12 +116,8 @@ function OfferScreen(): JSX.Element {
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
                     <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width={74} height={74} alt="Host avatar" />
                   </div>
-                  <span className="offer__user-name">
-                Angelina
-                  </span>
-                  <span className="offer__user-status">
-                Pro
-                  </span>
+                  <span className="offer__user-name">{host.name}</span>
+                  <span className="offer__user-status">{host.isPro ?? 'Pro'}</span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">

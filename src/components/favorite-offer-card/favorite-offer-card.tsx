@@ -1,12 +1,15 @@
+import { Link } from 'react-router-dom';
 import { Offer } from '../../types/offers';
-import OfferCardRating from '../offer-card-rating/offer-card-rating';
+import OfferRating from '../offer-rating/offer-rating';
+import { AppRoute } from '../../const';
 
 type FavoriteOfferCardProps = {
   offer: Offer;
 }
 
 function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
-  const {isPremium, previewImage, price, rating, title, type} = offer;
+  const {isPremium, previewImage, price, rating, title, type, id} = offer;
+  const offerURL = AppRoute.Offer.replace(':id', id);
 
   return (
     <article className="favorites__card place-card">
@@ -18,9 +21,9 @@ function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
         )
       }
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={offerURL}>
           <img className="place-card__image" src={previewImage} width={150} height={110} alt={title} />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -35,7 +38,7 @@ function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        <OfferCardRating rating={rating} />
+        <OfferRating rating={rating} />
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>

@@ -1,7 +1,7 @@
 import { Link, generatePath } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
-import OfferCardRating from '../offer-card-rating/offer-card-rating';
+import OfferRating from '../offer-rating/offer-rating';
 
 type OfferCardProps = {
   offer: Offer;
@@ -9,7 +9,6 @@ type OfferCardProps = {
 
 function OfferCard({offer}: OfferCardProps): JSX.Element {
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
-  //const offerURL = AppRoute.Offer.replace(':id', id);
   const offerURL = generatePath(AppRoute.Offer, {id});
 
   return (
@@ -39,7 +38,7 @@ function OfferCard({offer}: OfferCardProps): JSX.Element {
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <OfferCardRating rating={rating} />
+        <OfferRating rating={rating} />
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>
