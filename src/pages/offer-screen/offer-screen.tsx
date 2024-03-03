@@ -59,7 +59,7 @@ function OfferScreen(): JSX.Element {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
-              <OfferRating rating={rating} className='offer' />
+              <OfferRating rating={rating} ratingClassName='offer' />
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
               Apartment
