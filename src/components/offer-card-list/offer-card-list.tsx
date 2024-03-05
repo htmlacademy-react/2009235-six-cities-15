@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Offers } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
 
@@ -6,8 +7,12 @@ type OfferCardListProps = {
 }
 
 function OfferCardList({offers}: OfferCardListProps) {
+  const [hoverCardId, setHoverCard] = useState<string | null>(null);
+
+  const handleHoverCard = (id:string|null) => setHoverCard(id);
+
   return (
-    offers.map((offer) => <OfferCard offer={offer} key={offer.id} />)
+    offers.map((offer) => <OfferCard offer={offer} onCardHover={handleHoverCard} key={offer.id} />)
   );
 }
 

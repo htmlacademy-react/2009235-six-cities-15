@@ -34,3 +34,14 @@ export const months: readonly string[] = [
   'November',
   'December'
 ];
+
+export const Rates: { [key: number]: string } = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+};
+
+export const MIN_COMMENT_LENGTH: number = 50;
+export const MAX_COMMENT_LENGTH: number = 300;

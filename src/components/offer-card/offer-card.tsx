@@ -5,14 +5,27 @@ import OfferRating from '../offer-rating/offer-rating';
 
 type OfferCardProps = {
   offer: Offer;
+  cardClassName?: string;
+  onCardHover?: (id: string | null) => void;
 }
 
-function OfferCard({offer}: OfferCardProps): JSX.Element {
+function OfferCard({offer, cardClassName = 'cities', onCardHover}: OfferCardProps): JSX.Element {
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
 
+  const handleOnMouseEnter = () => onCardHover ? onCardHover(id) : () => {};
+  const handleOnMouseLeave = () => onCardHover ? onCardHover(null) : () => {};
+
   return (
-    <article className="cities__card place-card">
+    <article
+      className={`${cardClassName}__card place-card`}
+      //onMouseEnter={handleOnMouseEnter}
+      //onMouseLeave={handleOnMouseLeave}
+      {...(onCardHover && {
+        onMouseEnter: handleOnMouseEnter,
+        onMouseLeave: handleOnMouseLeave
+      })}
+    >
       {
         isPremium && (
           <div className="place-card__mark">
@@ -20,7 +33,7 @@ function OfferCard({offer}: OfferCardProps): JSX.Element {
           </div>
         )
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
         <Link to={offerURL}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt={title} />
         </Link>
