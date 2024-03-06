@@ -1,7 +1,7 @@
 import { Link, generatePath } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { Offer } from '../../types/offers';
-import OfferRating from '../offer-rating/offer-rating';
+import { AppRoute } from '../../../const';
+import { Offer } from '../../../types/offers';
+import StarsRating from '../stars-rating/stars-rating';
 
 type OfferCardProps = {
   offer: Offer;
@@ -51,7 +51,7 @@ function OfferCard({offer, cardClassName = 'cities', onCardHover}: OfferCardProp
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <OfferRating rating={rating} />
+        <StarsRating rating={rating} ratingClassName='place-card'/>
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>

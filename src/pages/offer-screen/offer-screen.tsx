@@ -2,9 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import { offers } from '../../mocks/offers';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
-import OfferRating from '../../components/offer-rating/offer-rating';
-import OfferReviews from '../../components/offer-reviews/offer-reviews';
-import OfferNearPlacesList from '../../components/offer-near-places-list/offer-near-places-list';
+import StarsRating from '../../components/common/stars-rating/stars-rating';
+import OfferReviews from '../../components/offer-screen/offer-reviews/offer-reviews';
+import OfferNearPlacesList from '../../components/offer-screen/offer-near-places-list/offer-near-places-list';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
@@ -54,7 +54,7 @@ function OfferScreen(): JSX.Element {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
-              <OfferRating rating={rating} ratingClassName='offer' />
+              <StarsRating rating={rating} ratingClassName='offer' />
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   {type}

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import Footer from '../../components/footer/footer';
-import FavoriteOfferCardList from '../../components/favorite-offer-card-list/favorite-offer-card-list';
+import FavoriteOfferCardList from '../../components/favorites-screen/favorite-offer-card-list/favorite-offer-card-list';
 import { Offers } from '../../types/offers';
 
 type FavoriteScreenProps = {

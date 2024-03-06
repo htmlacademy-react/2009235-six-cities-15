@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Offer } from '../../types/offers';
-import OfferRating from '../offer-rating/offer-rating';
-import { AppRoute } from '../../const';
+import { Offer } from '../../../types/offers';
+import StarsRating from '../../common/stars-rating/stars-rating';
+import { AppRoute } from '../../../const';
 
 type FavoriteOfferCardProps = {
   offer: Offer;
@@ -38,7 +38,7 @@ function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        <OfferRating rating={rating} />
+        <StarsRating rating={rating} />
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>

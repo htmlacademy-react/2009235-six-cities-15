@@ -1,6 +1,6 @@
-import { months } from '../../const';
-import { Reviews } from '../../types/reviews';
-import OfferRating from '../offer-rating/offer-rating';
+import { months } from '../../../const';
+import { Reviews } from '../../../types/reviews';
+import StarsRating from '../../common/stars-rating/stars-rating';
 
 type OfferReviewsListProps = {
   reviews: Reviews;
@@ -27,7 +27,7 @@ function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
                   </span>
                 </div>
                 <div className="reviews__info">
-                  <OfferRating rating={rating} ratingClassName='reviews'/>
+                  <StarsRating rating={rating} ratingClassName='reviews'/>
                   <p className="reviews__text">
                     {comment}
                   </p>

@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
-import OfferCardList from '../../components/offer-card-list/offer-card-list';
+import OfferCardList from '../../components/main-screen/offer-card-list/offer-card-list';
 
 type MainScreenProps = {
   offers: Offers;

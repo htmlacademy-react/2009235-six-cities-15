@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, Rates } from '../../const';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, Rates } from '../../../const';
 
 function OfferReviewForm(): JSX.Element {
   const [ formData, setFormData] = useState({
@@ -65,7 +65,7 @@ function OfferReviewForm(): JSX.Element {
 
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
-              To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
+              To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">{MIN_COMMENT_LENGTH} characters</b>.
         </p>
         <button className="reviews__submit form__submit button" type="submit" disabled={isSubmitDisabled}>Submit</button>
       </div>

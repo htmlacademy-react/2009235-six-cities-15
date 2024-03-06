@@ -1,9 +1,9 @@
-type OfferRatingProps = {
+type StarsRatingProps = {
   rating: number;
   ratingClassName ?: string;
 }
 
-function OfferRating({rating, ratingClassName = 'place-card'}: OfferRatingProps): JSX.Element {
+function StarsRating({rating, ratingClassName = 'place-card'}: StarsRatingProps): JSX.Element {
   const width = `${Math.round(rating) * 20}%`;
 
   return (
@@ -22,4 +22,4 @@ function OfferRating({rating, ratingClassName = 'place-card'}: OfferRatingProps)
   );
 }
 
-export default OfferRating;
+export default StarsRating;
