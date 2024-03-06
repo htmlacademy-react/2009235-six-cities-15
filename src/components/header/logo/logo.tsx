@@ -1,15 +1,18 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
+import classNames from 'classnames';
 
 type LogoProps = {
   isMainPage?: boolean;
 }
 
 function Logo({isMainPage = false}:LogoProps): JSX.Element {
+  const linkClassName = classNames('header__logo-link', { 'header__logo-link--active': isMainPage });
+
   return (
     <div className="header__left">
       <Link
-        className={`header__logo-link${isMainPage ? 'header__logo-link--active' : ''}`}
+        className={linkClassName}
         to={AppRoute.Main}
         style={isMainPage ? {pointerEvents: 'none'} : undefined}
       >

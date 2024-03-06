@@ -38,5 +38,7 @@ export type OfferDetail = {
 };
 
 //для GET /six-cities/offers/{offerId} убрать "previewImage" !!!
+//через Omit (когда бутет запрашиваться информация по конкретному предложению с сервера)
+
 export type Offer = OfferCard & OfferDetail;
 export type Offers = Offer[];

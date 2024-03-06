@@ -12,7 +12,7 @@ function OfferNearPlacesList({offers}:OfferNearPlacesListProps): JSX.Element {
       <div className="near-places__list places__list">
         {
           offers.slice(0,3).map((offer) => (
-            <OfferCard offer={offer} key={offer.id} cardClassName='near-places'/>
+            <OfferCard offer={offer} key={offer.id} classNamePrefix='near-places'/>
           ))
         }
       </div>

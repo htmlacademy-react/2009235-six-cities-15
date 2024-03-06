@@ -1,5 +1,5 @@
-import { months } from '../../../const';
 import { Reviews } from '../../../types/reviews';
+import { formatDate } from '../../../utils/format-date/format-date';
 import StarsRating from '../../common/stars-rating/stars-rating';
 
 type OfferReviewsListProps = {
@@ -14,7 +14,7 @@ function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
         {
           reviews.map((review) => {
             const {id, user, rating, comment, date} = review;
-            const commentDate = new Date(date);
+            const commentDate = formatDate(date);
 
             return (
               <li className="reviews__item" key={id}>
@@ -27,11 +27,11 @@ function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
                   </span>
                 </div>
                 <div className="reviews__info">
-                  <StarsRating rating={rating} ratingClassName='reviews'/>
+                  <StarsRating rating={rating} classNamePrefix='reviews'/>
                   <p className="reviews__text">
                     {comment}
                   </p>
-                  <time className="reviews__time" dateTime={commentDate.toISOString()}>{`${months[commentDate.getMonth()]} ${commentDate.getFullYear()}`}</time>
+                  <time className="reviews__time" dateTime={date}>{commentDate}</time>
                 </div>
               </li>
             );

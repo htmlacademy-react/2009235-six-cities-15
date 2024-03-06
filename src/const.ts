@@ -20,22 +20,7 @@ export const cities: readonly string[] = [
   'Dusseldorf'
 ];
 
-export const months: readonly string[] = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-export const Rates: { [key: number]: string } = {
+export const Rates: Record<number,string> = {
   1: 'terribly',
   2: 'badly',
   3: 'not bad',

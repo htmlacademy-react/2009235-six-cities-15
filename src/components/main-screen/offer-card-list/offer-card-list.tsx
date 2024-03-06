@@ -12,7 +12,7 @@ function OfferCardList({offers}: OfferCardListProps) {
   const handleHoverCard = (id:string|null) => setHoverCard(id);
 
   return (
-    offers.map((offer) => <OfferCard offer={offer} onCardHover={handleHoverCard} key={offer.id} />)
+    offers.map((offer) => <OfferCard offer={offer} classNamePrefix='cities' onCardHover={handleHoverCard} key={offer.id} />)
   );
 }
 

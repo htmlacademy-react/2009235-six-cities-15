@@ -5,26 +5,22 @@ import StarsRating from '../stars-rating/stars-rating';
 
 type OfferCardProps = {
   offer: Offer;
-  cardClassName?: string;
+  classNamePrefix: 'cities' | 'near-places';
   onCardHover?: (id: string | null) => void;
 }
 
-function OfferCard({offer, cardClassName = 'cities', onCardHover}: OfferCardProps): JSX.Element {
+function OfferCard({offer, classNamePrefix, onCardHover}: OfferCardProps): JSX.Element {
   const {isPremium, previewImage, price, rating, title, type, id} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
 
-  const handleOnMouseEnter = () => onCardHover ? onCardHover(id) : () => {};
-  const handleOnMouseLeave = () => onCardHover ? onCardHover(null) : () => {};
+  const handleOnMouseEnter = () => onCardHover ? onCardHover(id) : undefined;
+  const handleOnMouseLeave = () => onCardHover ? onCardHover(null) : undefined;
 
   return (
     <article
-      className={`${cardClassName}__card place-card`}
-      //onMouseEnter={handleOnMouseEnter}
-      //onMouseLeave={handleOnMouseLeave}
-      {...(onCardHover && {
-        onMouseEnter: handleOnMouseEnter,
-        onMouseLeave: handleOnMouseLeave
-      })}
+      className={`${classNamePrefix}__card place-card`}
+      onMouseEnter={handleOnMouseEnter}
+      onMouseLeave={handleOnMouseLeave}
     >
       {
         isPremium && (
@@ -33,7 +29,7 @@ function OfferCard({offer, cardClassName = 'cities', onCardHover}: OfferCardProp
           </div>
         )
       }
-      <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
+      <div className={`${classNamePrefix}__image-wrapper place-card__image-wrapper`}>
         <Link to={offerURL}>
           <img className="place-card__image" src={previewImage} width={260} height={200} alt={title} />
         </Link>
@@ -51,7 +47,7 @@ function OfferCard({offer, cardClassName = 'cities', onCardHover}: OfferCardProp
             <span className="visually-hidden">To bookmarks</span>
           </button>
         </div>
-        <StarsRating rating={rating} ratingClassName='place-card'/>
+        <StarsRating rating={rating} classNamePrefix='place-card'/>
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>

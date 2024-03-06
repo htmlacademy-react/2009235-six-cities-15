@@ -56,9 +56,9 @@ function OfferReviewForm(): JSX.Element {
       </div>
       <textarea
         className="reviews__textarea form__textarea"
-        id="review" name="review"
+        id="review"
+        name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        defaultValue={''}
         value={formData.comment}
         onChange={handleCommentChange}
       />
