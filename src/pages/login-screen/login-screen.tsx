@@ -1,19 +1,11 @@
 import { Helmet } from 'react-helmet-async';
-import HeaderLogo from '../../components/header-logo/header-logo';
 
 function LoginScreen(): JSX.Element {
   return (
-    <div className="page page--gray page--login">
+    <>
       <Helmet>
         <title>6 cities: authorization</title>
       </Helmet>
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <HeaderLogo/>
-          </div>
-        </div>
-      </header>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -39,7 +31,7 @@ function LoginScreen(): JSX.Element {
           </section>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 
