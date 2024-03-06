@@ -7,7 +7,7 @@ type OfferCardListProps = {
 }
 
 function OfferCardList({offers}: OfferCardListProps) {
-  const [hoverCardId, setHoverCard] = useState<string | null>(null);
+  const [hoverCardId, setHoverCard] = useState<string | null>(null); // eslint-disable-line
 
   const handleHoverCard = (id:string|null) => setHoverCard(id);
 
