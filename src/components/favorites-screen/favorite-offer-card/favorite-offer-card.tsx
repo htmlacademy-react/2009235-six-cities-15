@@ -38,7 +38,7 @@ function FavoriteOfferCard({offer}: FavoriteOfferCardProps): JSX.Element {
             <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
-        <StarsRating rating={rating} />
+        <StarsRating rating={rating} classNamePrefix='place-card'/>
         <h2 className="place-card__name">
           <a href="#">{title}</a>
         </h2>
