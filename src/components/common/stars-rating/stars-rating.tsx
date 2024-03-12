@@ -1,9 +1,10 @@
 type StarsRatingProps = {
   rating: number;
   classNamePrefix: 'place-card' | 'reviews' | 'offer';
+  variant?: 'full' | 'card';
 }
 
-function StarsRating({rating, classNamePrefix}: StarsRatingProps): JSX.Element {
+function StarsRating({rating, classNamePrefix, variant = 'card'}: StarsRatingProps): JSX.Element {
   const width = `${Math.round(rating) * 20}%`;
 
   return (
@@ -14,8 +15,8 @@ function StarsRating({rating, classNamePrefix}: StarsRatingProps): JSX.Element {
       </div>
 
       {
-        classNamePrefix === 'offer' && (
-          <span className="offer__rating-value rating__value">{rating}</span>
+        variant === 'full' && (
+          <span className={`${classNamePrefix}r__rating-value rating__value`}>{rating}</span>
         )
       }
     </div>
