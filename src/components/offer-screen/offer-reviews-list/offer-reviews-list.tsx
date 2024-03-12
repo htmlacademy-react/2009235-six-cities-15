@@ -1,6 +1,7 @@
 import { Reviews } from '../../../types/reviews';
 import { formatDate } from '../../../utils/format-date/format-date';
 import StarsRating from '../../common/stars-rating/stars-rating';
+import UserInfo from '../../common/user-info/user-info';
 
 type OfferReviewsListProps = {
   reviews: Reviews;
@@ -18,14 +19,7 @@ function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
 
             return (
               <li className="reviews__item" key={id}>
-                <div className="reviews__user user">
-                  <div className={`${user.isPro ?? 'reviews__avatar-wrapper--pro'} reviews__avatar-wrapper user__avatar-wrapper`}>
-                    <img className="reviews__avatar user__avatar" src={user.avatarUrl} width={54} height={54} alt={`${user.name}\`s avatar `} />
-                  </div>
-                  <span className="reviews__user-name">
-                    {user.name}
-                  </span>
-                </div>
+                <UserInfo user={user} variant='review'/>
                 <div className="reviews__info">
                   <StarsRating rating={rating} classNamePrefix='reviews'/>
                   <p className="reviews__text">
