@@ -5,10 +5,12 @@ import StarsRating from '../stars-rating/stars-rating';
 import OfferPrice from '../offer-price/offer-price';
 import PremiumLabel from '../premium-label/premium-label';
 import BookmarkButton from '../bookmark-button/bookmark-button';
+import classNames from 'classnames';
+import './styles.css';
 
 type OfferCardProps = {
   offer: Offer;
-  classNamePrefix: 'cities' | 'favorite' |'near-places';
+  classNamePrefix: 'cities' | 'favorites' |'near-places';
   onCardHover?: (id: string | null) => void;
 }
 
@@ -16,8 +18,8 @@ function OfferCard({offer, classNamePrefix, onCardHover}: OfferCardProps): JSX.E
   const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
 
-  const handleOnMouseEnter = () => onCardHover ? onCardHover(id) : undefined;
-  const handleOnMouseLeave = () => onCardHover ? onCardHover(null) : undefined;
+  const handleOnMouseEnter = () => onCardHover?.(id);
+  const handleOnMouseLeave = () => onCardHover?.(null);
 
   return (
     <article
@@ -31,7 +33,7 @@ function OfferCard({offer, classNamePrefix, onCardHover}: OfferCardProps): JSX.E
           <img className="place-card__image" src={previewImage} width={260} height={200} alt={title} />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className={classNames('place-card__info', {'place-card__info': classNamePrefix === 'favorites'})}>
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} classNamePrefix='place-card'/>
           <BookmarkButton isFavorite={isFavorite}/>
