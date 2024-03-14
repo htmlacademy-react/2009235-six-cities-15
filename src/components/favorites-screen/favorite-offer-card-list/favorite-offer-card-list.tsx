@@ -25,7 +25,7 @@ function FavoriteOfferCardList({offers}: FavoriteOfferCardListProps): JSX.Elemen
               </div>
               <div className="favorites__places">
                 {
-                  favoritesOffers.map((offer) => <OfferCard offer={offer} key={offer.id} classNamePrefix='favorites'/>)
+                  favoritesOffers.map((offer) => <OfferCard offer={offer} key={offer.id} classNamePrefix='favorites' variant='horizontal'/>)
                 }
               </div>
             </li>
