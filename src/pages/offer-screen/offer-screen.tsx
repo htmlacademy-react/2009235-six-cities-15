@@ -8,17 +8,23 @@ import OfferNearPlacesList from '../../components/offer-screen/offer-near-places
 import OfferPrice from '../../components/common/offer-price/offer-price';
 import PremiumLabel from '../../components/common/premium-label/premium-label';
 import UserInfo from '../../components/common/user-info/user-info';
+import Map from '../../components/common/map/map';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const currentOffer = offers.find((offer) => offer.id === id);
+
   const nearPlaces = offers.filter((offer) => offer.id !== id);
+  const nearPlacesLocations = nearPlaces.map((offer) => ({
+    ...offer.location,
+    id: offer.id
+  }));
 
   if (!currentOffer) {
     return (<PageNotFoundScreen/>);
   }
 
-  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description} = currentOffer;
+  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
   return (
     <>
       <Helmet>
@@ -88,7 +94,11 @@ function OfferScreen(): JSX.Element {
               <OfferReviews/>
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map
+            city={city.location}
+            classNamePrefix='offer'
+            points={nearPlacesLocations}
+          />
         </section>
         <div className="container">
           <OfferNearPlacesList offers={nearPlaces} />
