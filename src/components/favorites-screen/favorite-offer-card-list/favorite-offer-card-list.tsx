@@ -1,5 +1,5 @@
 import { Offers } from '../../../types/offers';
-import FavoriteOfferCard from '../favorite-offer-card/favorite-offer-card';
+import OfferCard from '../../common/offer-card/offer-card';
 
 type FavoriteOfferCardListProps = {
   offers: Offers;
@@ -25,7 +25,7 @@ function FavoriteOfferCardList({offers}: FavoriteOfferCardListProps): JSX.Elemen
               </div>
               <div className="favorites__places">
                 {
-                  favoritesOffers.map((offer) => <FavoriteOfferCard offer={offer} key={offer.id} />)
+                  favoritesOffers.map((offer) => <OfferCard offer={offer} key={offer.id} classNamePrefix='favorites' variant='horizontal'/>)
                 }
               </div>
             </li>

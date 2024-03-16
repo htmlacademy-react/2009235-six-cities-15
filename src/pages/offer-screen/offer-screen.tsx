@@ -5,17 +5,26 @@ import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import StarsRating from '../../components/common/stars-rating/stars-rating';
 import OfferReviews from '../../components/offer-screen/offer-reviews/offer-reviews';
 import OfferNearPlacesList from '../../components/offer-screen/offer-near-places-list/offer-near-places-list';
+import OfferPrice from '../../components/common/offer-price/offer-price';
+import PremiumLabel from '../../components/common/premium-label/premium-label';
+import UserInfo from '../../components/common/user-info/user-info';
+import Map from '../../components/common/map/map';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const currentOffer = offers.find((offer) => offer.id === id);
+
   const nearPlaces = offers.filter((offer) => offer.id !== id);
+  const nearPlacesLocations = nearPlaces.map((offer) => ({
+    ...offer.location,
+    id: offer.id
+  }));
 
   if (!currentOffer) {
     return (<PageNotFoundScreen/>);
   }
 
-  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description} = currentOffer;
+  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
   return (
     <>
       <Helmet>
@@ -36,13 +45,7 @@ function OfferScreen(): JSX.Element {
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {
-                isPremium && (
-                  <div className="offer__mark">
-                    <span>Premium</span>
-                  </div>
-                )
-              }
+              <PremiumLabel isPremium={isPremium} classNamePrefix='offer' />
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
                   {title}
@@ -54,7 +57,7 @@ function OfferScreen(): JSX.Element {
                   <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
-              <StarsRating rating={rating} classNamePrefix='offer' />
+              <StarsRating rating={rating} classNamePrefix='offer' variant='full'/>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   {type}
@@ -66,10 +69,7 @@ function OfferScreen(): JSX.Element {
                   Max {maxAdults} adults
                 </li>
               </ul>
-              <div className="offer__price">
-                <b className="offer__price-value">€{price}</b>
-                <span className="offer__price-text">&nbsp;night</span>
-              </div>
+              <OfferPrice price={price} classNamePrefix='offer'/>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
@@ -84,13 +84,7 @@ function OfferScreen(): JSX.Element {
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div className={`${host.isPro ?? 'offer__avatar-wrapper--pro'} offer__avatar-wrapper user__avatar-wrapper`}>
-                    <img className="offer__avatar user__avatar" src={host.avatarUrl} width={74} height={74} alt="Host avatar" />
-                  </div>
-                  <span className="offer__user-name">{host.name}</span>
-                  <span className="offer__user-status">{host.isPro ?? 'Pro'}</span>
-                </div>
+                <UserInfo user={host} variant='full' />
                 <div className="offer__description">
                   <p className="offer__text">
                     {description}
@@ -100,7 +94,11 @@ function OfferScreen(): JSX.Element {
               <OfferReviews/>
             </div>
           </div>
-          <section className="offer__map map" />
+          <Map
+            city={city.location}
+            classNamePrefix='offer'
+            points={nearPlacesLocations}
+          />
         </section>
         <div className="container">
           <OfferNearPlacesList offers={nearPlaces} />

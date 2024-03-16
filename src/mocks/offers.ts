@@ -169,7 +169,7 @@ export const offers : Offers = [
       'https://15.design.htmlacademy.pro/static/hotel/6.jpg'
     ],
     'city': {
-      'name': 'Amsterdam',
+      'name': 'Paris',
       'location': {
         'latitude': 48.85661,
         'longitude': 2.351499,

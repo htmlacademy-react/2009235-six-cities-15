@@ -11,7 +11,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const cities: readonly string[] = [
+export const citiesTitles: readonly string[] = [
   'Paris',
   'Cologne',
   'Brussels',

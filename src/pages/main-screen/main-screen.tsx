@@ -1,83 +1,66 @@
 import { Helmet } from 'react-helmet-async';
 import { Offers } from '../../types/offers';
 import OfferCardList from '../../components/main-screen/offer-card-list/offer-card-list';
+import LocationsTadsList from '../../components/main-screen/locations-tabs-list/locations-tabs-list';
+import Map from '../../components/common/map/map';
+import { useState } from 'react';
+import OffersSortingForm from '../../components/main-screen/offers-sorting-form/offers-sorting-form';
+import OffersEmpty from '../../components/main-screen/offers-empty/offers-empty';
+import classNames from 'classnames';
 
 type MainScreenProps = {
   offers: Offers;
 }
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
+  const [hoverCardId, setHoverCard] = useState<string | null>(null);
+  const handleHoverCard = (id:string|null) => setHoverCard(id);
+  //const currentOfferLocation = offers.find((offer) => offer.id === hoverCardId ? offer.city.location : null)?.location;
+
+  const defaultActiveCity = offers[0].city.name;
+  const [activeCityTitle, setActiveLink] = useState<string>(defaultActiveCity);
+  const handleLinkClick = (cityTitle:string) => setActiveLink(cityTitle);
+
+  const filteredOffers = offers.filter((offer) => offer.city.name === activeCityTitle);
+  const isOffersEmpty = filteredOffers.length === 0;
+  const filteredOffersLocations = filteredOffers.map((offer) => ({
+    ...offer.location,
+    id: offer.id
+  }));
+  //consol
+  //console.log(activeCityLocation); <-- из-за двух состояний элемент перерисовывается дважды
+
   return (
     <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <main className="page__main page__main--index">
+      <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isOffersEmpty})}>
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Paris</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Cologne</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Brussels</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item tabs__item--active">
-                  <span>Amsterdam</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Hamburg</span>
-                </a>
-              </li>
-              <li className="locations__item">
-                <a className="locations__item-link tabs__item" href="#">
-                  <span>Dusseldorf</span>
-                </a>
-              </li>
-            </ul>
-          </section>
-        </div>
+        <LocationsTadsList activeCity={activeCityTitle} onLinkClick={handleLinkClick}/>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                Popular
-                  <svg className="places__sorting-arrow" width={7} height={4}>
-                    <use xlinkHref="#icon-arrow-select" />
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCardList offers={offers}/>
+          {
+            isOffersEmpty ? <OffersEmpty/> : (
+              <div className="cities__places-container container">
+                <section className="cities__places places">
+                  <h2 className="visually-hidden">Places</h2>
+                  <b className="places__found">{`${filteredOffers.length}  places to stay in  ${activeCityTitle}`}</b>
+                  <OffersSortingForm/>
+                  <div className="cities__places-list places__list tabs__content">
+                    <OfferCardList offers={filteredOffers} onCardHover={handleHoverCard}/>
+                  </div>
+                </section>
+                <div className="cities__right-section">
+                  <Map
+                    city={filteredOffers[0].city.location}
+                    classNamePrefix='cities'
+                    points={filteredOffersLocations}
+                    selectedPointId={hoverCardId}
+                  />
+                </div>
               </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map" />
-            </div>
-          </div>
+            )
+          }
         </div>
       </main>
     </>
