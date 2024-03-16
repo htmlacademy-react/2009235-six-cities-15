@@ -1,5 +1,5 @@
 import { citiesTitles } from '../../../const';
-import LocationTadsItem from '../locations-tabs-item/locations-tabs-item';
+import LocationTabsItem from '../locations-tabs-item/locations-tabs-item';
 
 type LocationsTadsListProps = {
   activeCity: string;
@@ -17,7 +17,7 @@ function LocationsTadsList({activeCity, onLinkClick}:LocationsTadsListProps): JS
               const isActiveCity = cityTitle === activeCity;
 
               return (
-                <LocationTadsItem
+                <LocationTabsItem
                   cityTitle={cityTitle}
                   isActiveCity={isActiveCity}
                   key={cityTitle}

@@ -40,13 +40,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
         <LocationsTadsList activeCity={activeCityTitle} onLinkClick={handleLinkClick}/>
         <div className="cities">
           {
-            isOffersEmpty && (
-              <OffersEmpty/>
-            )
-          }
-
-          {
-            !isOffersEmpty && (
+            isOffersEmpty ? <OffersEmpty/> : (
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>

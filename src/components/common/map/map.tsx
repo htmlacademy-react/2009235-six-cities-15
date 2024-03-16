@@ -6,9 +6,6 @@ import 'leaflet/dist/leaflet.css';
 
 import './styles.css';
 
-const URL_MARKER_DEFAULT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg';
-const URL_MARKER_CURRENT = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg';
-
 type mapProps = {
   city: Location;
   classNamePrefix: 'cities' | 'offer';
@@ -16,21 +13,21 @@ type mapProps = {
   selectedPointId?: string | null;
 }
 
+const defaultCustomIcon = leaflet.icon({
+  iconUrl:  'img/pin.svg',
+  iconSize: [27, 39],
+  iconAnchor: [12, 20],
+});
+
+const currentCustomIcon = leaflet.icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [27, 39],
+  iconAnchor: [12, 20],
+});
+
 function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-
-  const defaultCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = leaflet.icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
 
   useEffect(() => {
     if (map) {

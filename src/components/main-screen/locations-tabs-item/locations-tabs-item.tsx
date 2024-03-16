@@ -4,7 +4,7 @@ type FavoriteOfferCardProps = {
   onLinkClick: (cityTitle: string) => void;
 }
 
-function LocationTadsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferCardProps): JSX.Element {
+function LocationTabsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferCardProps): JSX.Element {
   const handleOnLinkClick = () => onLinkClick(cityTitle);
 
   return (
@@ -20,4 +20,4 @@ function LocationTadsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferC
   );
 }
 
-export default LocationTadsItem;
+export default LocationTabsItem;
