@@ -6,13 +6,6 @@ import 'leaflet/dist/leaflet.css';
 
 import './styles.css';
 
-type mapProps = {
-  city: Location;
-  classNamePrefix: 'cities' | 'offer';
-  points: (Location & {id: string})[];
-  selectedPointId?: string | null;
-}
-
 const defaultCustomIcon = leaflet.icon({
   iconUrl:  'img/pin.svg',
   iconSize: [27, 39],
@@ -24,6 +17,13 @@ const currentCustomIcon = leaflet.icon({
   iconSize: [27, 39],
   iconAnchor: [12, 20],
 });
+
+type mapProps = {
+  city: Location;
+  classNamePrefix: 'cities' | 'offer';
+  points: (Location & {id: string})[];
+  selectedPointId?: string | null;
+}
 
 function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): JSX.Element {
   const mapRef = useRef(null);

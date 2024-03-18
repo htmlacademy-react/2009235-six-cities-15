@@ -1,11 +1,11 @@
 type FavoriteOfferCardProps = {
-  cityTitle: string;
+  cityName: string;
   isActiveCity: boolean;
-  onLinkClick: (cityTitle: string) => void;
+  onLinkClick: (cityName: string) => void;
 }
 
-function LocationTabsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferCardProps): JSX.Element {
-  const handleOnLinkClick = () => onLinkClick(cityTitle);
+function LocationTabsItem({cityName, isActiveCity, onLinkClick}: FavoriteOfferCardProps): JSX.Element {
+  const handleOnLinkClick = () => onLinkClick(cityName);
 
   return (
     <li className="locations__item">
@@ -14,7 +14,7 @@ function LocationTabsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferC
         {...(!isActiveCity && {href: '#'})}
         onClick={handleOnLinkClick}
       >
-        <span>{cityTitle}</span>
+        <span>{cityName}</span>
       </a>
     </li>
   );

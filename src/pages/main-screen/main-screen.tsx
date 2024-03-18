@@ -18,10 +18,10 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
   //const currentOfferLocation = offers.find((offer) => offer.id === hoverCardId ? offer.city.location : null)?.location;
 
   const defaultActiveCity = offers[0].city.name;
-  const [activeCityTitle, setActiveLink] = useState<string>(defaultActiveCity);
-  const handleLinkClick = (cityTitle:string) => setActiveLink(cityTitle);
+  const [activecityName, setActiveLink] = useState<string>(defaultActiveCity);
+  const handleLinkClick = (cityName:string) => setActiveLink(cityName);
 
-  const filteredOffers = offers.filter((offer) => offer.city.name === activeCityTitle);
+  const filteredOffers = offers.filter((offer) => offer.city.name === activecityName);
   const isOffersEmpty = filteredOffers.length === 0;
   const filteredOffersLocations = filteredOffers.map((offer) => ({
     ...offer.location,
@@ -37,14 +37,14 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
       </Helmet>
       <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isOffersEmpty})}>
         <h1 className="visually-hidden">Cities</h1>
-        <LocationsTadsList activeCity={activeCityTitle} onLinkClick={handleLinkClick}/>
+        <LocationsTadsList activeCity={activecityName} onLinkClick={handleLinkClick}/>
         <div className="cities">
           {
             isOffersEmpty ? <OffersEmpty/> : (
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
-                  <b className="places__found">{`${filteredOffers.length}  places to stay in  ${activeCityTitle}`}</b>
+                  <b className="places__found">{`${filteredOffers.length}  places to stay in  ${activecityName}`}</b>
                   <OffersSortingForm/>
                   <div className="cities__places-list places__list tabs__content">
                     <OfferCardList offers={filteredOffers} onCardHover={handleHoverCard}/>

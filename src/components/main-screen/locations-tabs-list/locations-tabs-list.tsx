@@ -1,9 +1,9 @@
-import { citiesTitles } from '../../../const';
+import { citiesNames } from '../../../const';
 import LocationTabsItem from '../locations-tabs-item/locations-tabs-item';
 
 type LocationsTadsListProps = {
   activeCity: string;
-  onLinkClick: (cityTitle: string) => void;
+  onLinkClick: (cityName: string) => void;
 }
 
 function LocationsTadsList({activeCity, onLinkClick}:LocationsTadsListProps): JSX.Element {
@@ -13,14 +13,14 @@ function LocationsTadsList({activeCity, onLinkClick}:LocationsTadsListProps): JS
       <section className="locations container">
         <ul className="locations__list tabs__list">
           {
-            citiesTitles.map((cityTitle) => {
-              const isActiveCity = cityTitle === activeCity;
+            citiesNames.map((cityName) => {
+              const isActiveCity = cityName === activeCity;
 
               return (
                 <LocationTabsItem
-                  cityTitle={cityTitle}
+                  cityName={cityName}
                   isActiveCity={isActiveCity}
-                  key={cityTitle}
+                  key={cityName}
                   onLinkClick={onLinkClick}
                 />
               );
