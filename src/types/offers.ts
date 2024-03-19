@@ -1,6 +1,4 @@
-import { citiesNames } from '../const';
-
-export type CityName = typeof citiesNames[number];
+import { CityName } from '../const';
 
 export type Location = {
   latitude: number;

@@ -1,15 +1,19 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveCityAction, setHoverOfferIdAction} from './action';
-import { CityName } from '../types/offers';
+import { setActiveCityAction, setHoverOfferIdAction, fetchOffers } from './action';
+import { Offers } from '../types/offers';
+import { CityName } from '../const';
+import { offers } from '../mocks/offers';
 
 type AppState = {
   activeCityName: CityName;
   hoverOfferId: string | null;
+  offers: Offers;
 };
 
 const initialState:AppState = {
-  activeCityName: 'Paris',
+  activeCityName: CityName.Paris,
   hoverOfferId: null,
+  offers,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -19,5 +23,8 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setHoverOfferIdAction, (state, action) => {
       state.hoverOfferId = action.payload;
+    })
+    .addCase(fetchOffers, (state, action) => {
+      state.offers = action.payload;
     });
 });

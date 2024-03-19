@@ -38,21 +38,42 @@ function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): 
             lat: point.latitude,
             lng: point.longitude,
           }, {
-            icon: (point.id === selectedPointId)
-              ? currentCustomIcon
-              : defaultCustomIcon,
+            icon: defaultCustomIcon,
           })
           .addTo(markersGroup);
       });
 
-      //тут надо разбить на разные layerGroup
       return () => {
         if (map && classNamePrefix === 'offer') {
-          markersGroup.clearLayers();
+          map.removeLayer(markersGroup);
         }
       };
     }
-  }, [map, points, selectedPointId]);
+  }, [map, points]);
+
+  useEffect(() => {
+    if (map && selectedPointId !== null) {
+      const markerCurrentGroup = leaflet.layerGroup().addTo(map);
+      const currentPoint = points.find((point) => point.id === selectedPointId);
+
+      if (currentPoint) {
+        leaflet
+          .marker({
+            lat: currentPoint.latitude,
+            lng: currentPoint.longitude,
+          }, {
+            icon: currentCustomIcon,
+          })
+          .addTo(markerCurrentGroup);
+      }
+
+      return () => {
+        if (map) {
+          map.removeLayer(markerCurrentGroup);
+        }
+      };
+    }
+  }, [map, selectedPointId]);
 
   return (
     <section className={`${classNamePrefix}__map map`} ref={mapRef}/>
@@ -60,25 +81,3 @@ function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): 
 }
 
 export default Map;
-
-/*useEffect(() => {
-    if (map && selectedPoint !== null) {
-      const markerCurrentGroup = leaflet.layerGroup().addTo(map);
-      points.forEach((point) => {
-        leaflet
-          .marker({
-            lat: point.latitude,
-            lng: point.longitude,
-          }, {
-            icon: currentCustomIcon,
-          })
-          .addTo(markerCurrentGroup);
-      });
-
-      return () => {
-        if (map) {
-          markerCurrentGroup.clearLayers();
-        }
-      };
-    }
-  }, [map, selectedPoint]);*/

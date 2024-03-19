@@ -13,15 +13,13 @@ type MapController = {
 export function useMap({ mapRef, city }: MapController) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
+  const { latitude: lat, longitude: lng, zoom } = city;
 
   useEffect(() => {
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
-        center: {
-          lat: city.latitude,
-          lng: city.longitude,
-        },
-        zoom: city.zoom,
+        center: {lat, lng},
+        zoom,
       });
 
       leaflet
@@ -37,7 +35,8 @@ export function useMap({ mapRef, city }: MapController) {
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [city, mapRef]);
+    map?.setView({ lat , lng }, zoom);
+  }, [city, mapRef, map]);
 
   return map;
 }
