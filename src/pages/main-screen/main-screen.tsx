@@ -2,7 +2,6 @@ import { Helmet } from 'react-helmet-async';
 import OfferCardList from '../../components/main-screen/offer-card-list/offer-card-list';
 import LocationsTadsList from '../../components/main-screen/locations-tabs-list/locations-tabs-list';
 import Map from '../../components/common/map/map';
-import { useState } from 'react';
 import OffersSortingForm from '../../components/main-screen/offers-sorting-form/offers-sorting-form';
 import OffersEmpty from '../../components/main-screen/offers-empty/offers-empty';
 import classNames from 'classnames';
@@ -18,10 +17,6 @@ function MainScreen(): JSX.Element {
     ...offer.location,
     id: offer.id
   }));
-
-  const [hoverCardId, setHoverCard] = useState<string | null>(null);
-  const handleHoverCard = (id:string|null) => setHoverCard(id);
-
 
   return (
     <>
@@ -40,7 +35,7 @@ function MainScreen(): JSX.Element {
                   <b className="places__found">{`${offersByCity.length}  places to stay in  ${activeCityName}`}</b>
                   <OffersSortingForm/>
                   <div className="cities__places-list places__list tabs__content">
-                    <OfferCardList offers={offersByCity} onCardHover={handleHoverCard}/>
+                    <OfferCardList offers={offersByCity}/>
                   </div>
                 </section>
                 <div className="cities__right-section">
@@ -48,7 +43,6 @@ function MainScreen(): JSX.Element {
                     city={offersByCity[0].city.location}
                     classNamePrefix='cities'
                     points={cityPoints}
-                    selectedPointId={hoverCardId}
                   />
                 </div>
               </div>

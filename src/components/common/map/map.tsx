@@ -5,6 +5,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import './styles.css';
+import { useAppSelector } from '../../../hooks/redux';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl:  'img/pin.svg',
@@ -22,12 +23,12 @@ type mapProps = {
   city: Location;
   classNamePrefix: 'cities' | 'offer';
   points: (Location & {id: string})[];
-  selectedPointId?: string | null;
 }
 
-function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): JSX.Element {
+function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
+  const selectedPointId = useAppSelector((state) => state.hoverOfferId);
 
   useEffect(() => {
     if (map) {
@@ -42,6 +43,10 @@ function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): 
           })
           .addTo(markersGroup);
       });
+
+      if (classNamePrefix === 'offer') {
+        map.scrollWheelZoom.disable();
+      }
 
       return () => {
         if (map && classNamePrefix === 'offer') {

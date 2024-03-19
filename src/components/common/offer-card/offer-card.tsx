@@ -6,6 +6,8 @@ import OfferPrice from '../offer-price/offer-price';
 import PremiumLabel from '../premium-label/premium-label';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import classNames from 'classnames';
+import { useAppDispatch } from '../../../hooks/redux';
+import { setHoverOfferIdAction } from '../../../store/action';
 
 const variantConfig = {
   vertical: {
@@ -21,17 +23,17 @@ const variantConfig = {
 type OfferCardProps = {
   offer: Offer;
   classNamePrefix: 'cities' | 'favorites' |'near-places';
-  onCardHover?: (id: string | null) => void;
   variant?: 'vertical' | 'horizontal';
 }
 
-function OfferCard({offer, classNamePrefix, variant = 'vertical', onCardHover}: OfferCardProps): JSX.Element {
+function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProps): JSX.Element {
   const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
   const {width, height} = variantConfig[variant];
 
-  const handleOnMouseEnter = () => onCardHover?.(id);
-  const handleOnMouseLeave = () => onCardHover?.(null);
+  const dispatch = useAppDispatch();
+  const handleOnMouseEnter = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(id)) : undefined;
+  const handleOnMouseLeave = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(null)) : undefined;
 
   return (
     <article

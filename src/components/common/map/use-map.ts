@@ -31,7 +31,6 @@ export function useMap({ mapRef, city }: MapController) {
         )
         .addTo(instance);
 
-      instance.scrollWheelZoom.disable();
       setMap(instance);
       isRenderedRef.current = true;
     }
