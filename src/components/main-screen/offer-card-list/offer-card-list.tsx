@@ -1,7 +1,6 @@
 //import { useState } from 'react';
-import { useAppSelector } from '../../../hooks/redux';
+import { useOffersSort } from '../../../hooks/use-offers-sort';
 import { Offers } from '../../../types/offers';
-import { sortByOption } from '../../../utils/sort/sort';
 import OfferCard from '../../common/offer-card/offer-card';
 
 type OfferCardListProps = {
@@ -9,8 +8,7 @@ type OfferCardListProps = {
 }
 
 function OfferCardList({offers}: OfferCardListProps) {
-  const activeSortOption = useAppSelector((state) => state.activeSortOption);
-  const sortedOffers = sortByOption(activeSortOption, offers);
+  const sortedOffers = useOffersSort(offers);
 
   return (
     sortedOffers.map((offer) => (

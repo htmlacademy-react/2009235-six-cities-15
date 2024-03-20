@@ -13,10 +13,7 @@ function MainScreen(): JSX.Element {
 
   const offersByCity = offers.filter((offer) => offer.city.name === activeCityName);
   const isOffersEmpty = offersByCity.length === 0;
-  const cityPoints = offersByCity.map((offer) => ({
-    ...offer.location,
-    id: offer.id
-  }));
+  const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
 
   return (
     <>
