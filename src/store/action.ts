@@ -1,7 +1,8 @@
 import {createAction} from '@reduxjs/toolkit';
 import { Offers } from '../types/offers';
-import { CityName } from '../const';
+import { CityName, SortOptions } from '../const';
 
 export const setActiveCityAction = createAction<CityName>('setCity');
 export const setHoverOfferIdAction = createAction<string | null>('setHoverOfferId');
-export const fetchOffers = createAction<Offers>('fetchOffers');
+export const fetchOffersAction = createAction<Offers>('fetchOffersAction');
+export const setSortOptionAction = createAction<SortOptions>('setSortOption');

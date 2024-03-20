@@ -1,19 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveCityAction, setHoverOfferIdAction, fetchOffers } from './action';
+import { setActiveCityAction, setHoverOfferIdAction, fetchOffersAction, setSortOptionAction } from './action';
 import { Offers } from '../types/offers';
-import { CityName } from '../const';
+import { CityName, SortOptions } from '../const';
 import { offers } from '../mocks/offers';
 
 type AppState = {
   activeCityName: CityName;
   hoverOfferId: string | null;
   offers: Offers;
+  activeSortOption: SortOptions;
 };
 
 const initialState:AppState = {
   activeCityName: CityName.Paris,
   hoverOfferId: null,
   offers,
+  activeSortOption: SortOptions.POPULAR,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -24,7 +26,10 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setHoverOfferIdAction, (state, action) => {
       state.hoverOfferId = action.payload;
     })
-    .addCase(fetchOffers, (state, action) => {
+    .addCase(fetchOffersAction, (state, action) => {
       state.offers = action.payload;
+    })
+    .addCase(setSortOptionAction, (state, action) => {
+      state.activeSortOption = action.payload;
     });
 });
