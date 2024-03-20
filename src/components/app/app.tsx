@@ -27,7 +27,7 @@ function App({offers}:AppScreenProps): JSX.Element {
           <Route path={AppRoute.Main} element={<Layout authorizationStatus={authorizationStatus}/>}>
             <Route
               index
-              element={<MainScreen offers={offers} />}
+              element={<MainScreen/>}
             />
 
             <Route path={AppRoute.Offer} element={<OfferScreen/>} />
