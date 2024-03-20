@@ -6,12 +6,13 @@ import OffersSortingForm from '../../components/main-screen/offers-sorting-form/
 import OffersEmpty from '../../components/main-screen/offers-empty/offers-empty';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/redux';
+import { CityName } from '../../const';
 
 function MainScreen(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const activeCityName = useAppSelector((state) => state.activeCityName);
 
-  const offersByCity = offers.filter((offer) => offer.city.name === activeCityName);
+  const offersByCity = offers.filter((offer) => offer.city.name as CityName === activeCityName);
   const isOffersEmpty = offersByCity.length === 0;
   const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
 
