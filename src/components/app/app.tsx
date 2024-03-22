@@ -8,16 +8,10 @@ import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found
 import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
-import { Offers } from '../../types/offers';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 
-type AppScreenProps = {
-  offers: Offers;
-}
-
-function App({offers}:AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const authorizationStatus = AuthorizationStatus.Auth;
-  const favoritesOffers = offers.filter(({ isFavorite }) => isFavorite);
 
   return (
     <HelmetProvider>
@@ -37,7 +31,7 @@ function App({offers}:AppScreenProps): JSX.Element {
               path={AppRoute.Favorites}
               element={
                 <PrivateRoute authorizationStatus={authorizationStatus}>
-                  <FavoritesScreen offers={favoritesOffers}/>
+                  <FavoritesScreen/>
                 </PrivateRoute>
               }
             />
