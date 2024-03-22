@@ -1,23 +1,29 @@
-type FavoriteOfferCardProps = {
-  cityTitle: string;
-  isActiveCity: boolean;
-  onLinkClick: (cityTitle: string) => void;
+import { Link } from 'react-router-dom';
+import { AppRoute, CityName } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
+import { setActiveCityAction } from '../../../store/action';
+
+type LocationTabProps = {
+  cityName: CityName;
 }
 
-function LocationTabsItem({cityTitle, isActiveCity, onLinkClick}: FavoriteOfferCardProps): JSX.Element {
-  const handleOnLinkClick = () => onLinkClick(cityTitle);
+function LocationTab({cityName}: LocationTabProps): JSX.Element {
+  const activeCityName = useAppSelector((state) => state.activeCityName);
+  const isActiveCity = activeCityName === cityName;
+
+  const dispatch = useAppDispatch();
+  const handleTabClick = () => dispatch(setActiveCityAction(cityName));
 
   return (
-    <li className="locations__item">
-      <a
+    <li className="locations__item" onClick={handleTabClick}>
+      <Link
         className={`locations__item-link tabs__item ${isActiveCity && 'tabs__item--active'}`}
-        {...(!isActiveCity && {href: '#'})}
-        onClick={handleOnLinkClick}
+        to={AppRoute.Main}
       >
-        <span>{cityTitle}</span>
-      </a>
+        <span>{cityName}</span>
+      </Link>
     </li>
   );
 }
 
-export default LocationTabsItem;
+export default LocationTab;

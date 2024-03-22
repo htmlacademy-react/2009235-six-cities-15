@@ -5,13 +5,7 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import './styles.css';
-
-type mapProps = {
-  city: Location;
-  classNamePrefix: 'cities' | 'offer';
-  points: (Location & {id: string})[];
-  selectedPointId?: string | null;
-}
+import { useAppSelector } from '../../../hooks/redux';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl:  'img/pin.svg',
@@ -25,9 +19,16 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [12, 20],
 });
 
-function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): JSX.Element {
+type mapProps = {
+  city: Location;
+  classNamePrefix: 'cities' | 'offer';
+  points: (Location & {id: string})[];
+}
+
+function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
+  const selectedPointId = useAppSelector((state) => state.hoverOfferId);
 
   useEffect(() => {
     if (map) {
@@ -38,21 +39,46 @@ function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): 
             lat: point.latitude,
             lng: point.longitude,
           }, {
-            icon: (point.id === selectedPointId)
-              ? currentCustomIcon
-              : defaultCustomIcon,
+            icon: defaultCustomIcon,
           })
           .addTo(markersGroup);
       });
 
-      //тут надо разбить на разные layerGroup
+      if (classNamePrefix === 'offer') {
+        map.scrollWheelZoom.disable();
+      }
+
       return () => {
         if (map && classNamePrefix === 'offer') {
-          markersGroup.clearLayers();
+          map.removeLayer(markersGroup);
         }
       };
     }
-  }, [map, points, selectedPointId]);
+  }, [map, points]);
+
+  useEffect(() => {
+    if (map && selectedPointId !== null) {
+      const markerCurrentGroup = leaflet.layerGroup().addTo(map);
+      const currentPoint = points.find((point) => point.id === selectedPointId);
+
+      if (currentPoint) {
+        leaflet
+          .marker({
+            lat: currentPoint.latitude,
+            lng: currentPoint.longitude,
+          }, {
+            icon: currentCustomIcon,
+          })
+          .addTo(markerCurrentGroup);
+      }
+
+      return () => {
+        if (map) {
+          map.removeLayer(markerCurrentGroup);
+        }
+      };
+    }
+  }, [map, selectedPointId]);
 
   return (
     <section className={`${classNamePrefix}__map map`} ref={mapRef}/>
@@ -60,25 +86,3 @@ function Map({city, classNamePrefix, points, selectedPointId = null}:mapProps): 
 }
 
 export default Map;
-
-/*useEffect(() => {
-    if (map && selectedPoint !== null) {
-      const markerCurrentGroup = leaflet.layerGroup().addTo(map);
-      points.forEach((point) => {
-        leaflet
-          .marker({
-            lat: point.latitude,
-            lng: point.longitude,
-          }, {
-            icon: currentCustomIcon,
-          })
-          .addTo(markerCurrentGroup);
-      });
-
-      return () => {
-        if (map) {
-          markerCurrentGroup.clearLayers();
-        }
-      };
-    }
-  }, [map, selectedPoint]);*/

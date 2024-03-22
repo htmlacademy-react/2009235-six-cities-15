@@ -9,6 +9,7 @@ import OfferPrice from '../../components/common/offer-price/offer-price';
 import PremiumLabel from '../../components/common/premium-label/premium-label';
 import UserInfo from '../../components/common/user-info/user-info';
 import Map from '../../components/common/map/map';
+import BookmarkButton from '../../components/common/bookmark-button/bookmark-button';
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
@@ -24,7 +25,7 @@ function OfferScreen(): JSX.Element {
     return (<PageNotFoundScreen/>);
   }
 
-  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city} = currentOffer;
+  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city, isFavorite} = currentOffer;
   return (
     <>
       <Helmet>
@@ -50,12 +51,7 @@ function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkButton isFavorite={isFavorite} classNamePrefix='offer' variant='big'/>
               </div>
               <StarsRating rating={rating} classNamePrefix='offer' variant='full'/>
               <ul className="offer__features">
