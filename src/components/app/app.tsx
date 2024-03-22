@@ -9,6 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
+import MarginIfScroll from '../../utils/margin-if-scroll/margin-if-scroll';
 
 function App(): JSX.Element {
   const authorizationStatus = AuthorizationStatus.Auth;
@@ -17,6 +18,7 @@ function App(): JSX.Element {
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop/>
+        <MarginIfScroll/>
         <Routes>
           <Route path={AppRoute.Main} element={<Layout authorizationStatus={authorizationStatus}/>}>
             <Route
