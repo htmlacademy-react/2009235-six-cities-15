@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute} from '../../const';
 import Header from '../header/header';
 
 const getLayoutState = (pathname: AppRoute) => {
@@ -16,6 +16,9 @@ const getLayoutState = (pathname: AppRoute) => {
       isLoginPage = true;
       rootClassName = ' page--gray page--login';
       break;
+    case AppRoute.Favorites:
+      rootClassName = ' page__main--favorites';
+      break;
   }
   /*page__main page__main--favorites page__main--favorites-empty
   добавить клаасс стр. с отсутсвием избранных предложений
@@ -24,21 +27,15 @@ const getLayoutState = (pathname: AppRoute) => {
   return {isMainPage, isLoginPage, rootClassName};
 };
 
-type LayoutProps = {
-  authorizationStatus: AuthorizationStatus;
-}
-
-function Layout({authorizationStatus}:LayoutProps): JSX.Element {
+function Layout(): JSX.Element {
   const {pathname} = useLocation();
   const {isMainPage, isLoginPage, rootClassName} = getLayoutState(pathname as AppRoute);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
 
   return (
     <div className={`page${rootClassName}`}>
       <Header
         isMainPage={isMainPage}
         isLoginPage={isLoginPage}
-        isAuth={isAuth}
       />
 
       <Outlet/>

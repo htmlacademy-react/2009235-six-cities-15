@@ -1,5 +1,8 @@
 import React, { Fragment, useState } from 'react';
-import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, Rates } from '../../../const';
+import { Rates } from '../../../const';
+
+const MIN_COMMENT_LENGTH: number = 50;
+const MAX_COMMENT_LENGTH: number = 300;
 
 function OfferReviewForm(): JSX.Element {
   const [ formData, setFormData] = useState({

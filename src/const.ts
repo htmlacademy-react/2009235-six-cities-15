@@ -35,5 +35,10 @@ export enum SortOptions {
   TOP_RATED_FIRST = 'Top rated first'
 }
 
-export const MIN_COMMENT_LENGTH: number = 50;
-export const MAX_COMMENT_LENGTH: number = 300;
+export enum APIRoute {
+  Offers = '/offers',
+  FavoritesOffers = '/favorite',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+}
