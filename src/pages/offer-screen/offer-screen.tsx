@@ -1,6 +1,5 @@
 import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
-import { offers } from '../../mocks/offers';
 import PageNotFoundScreen from '../page-not-found-screen/page-not-found-screen';
 import StarsRating from '../../components/common/stars-rating/stars-rating';
 import OfferReviews from '../../components/offer-screen/offer-reviews/offer-reviews';
@@ -10,22 +9,53 @@ import PremiumLabel from '../../components/common/premium-label/premium-label';
 import UserInfo from '../../components/common/user-info/user-info';
 import Map from '../../components/common/map/map';
 import BookmarkButton from '../../components/common/bookmark-button/bookmark-button';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useEffect } from 'react';
+import { setHoverOfferIdAction } from '../../store/action';
+import { fetchOfferAction} from '../../store/api-actions';
+import Spinner from '../../components/common/spinner/spinner';
+
+const MAX_PICTURE_COUNT: number = 6;
+const MAX_NEAR_PLACES_COUNT: number = 3;
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
-  const currentOffer = offers.find((offer) => offer.id === id);
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const currentOfferFetchStatus = useAppSelector((state) => state.currentOfferFetchStatus);
+  const nearPlaces = useAppSelector((state) => state.nearPlaces).slice(0, MAX_NEAR_PLACES_COUNT);
 
-  const nearPlaces = offers.filter((offer) => offer.id !== id);
-  const nearPlacesLocations = nearPlaces.map((offer) => ({
-    ...offer.location,
-    id: offer.id
-  }));
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchOfferAction(id));
+      dispatch(setHoverOfferIdAction(id));
+    }
+
+    return () => {
+      dispatch(setHoverOfferIdAction(null));
+    };
+  }, [id]);
+
+  if (currentOfferFetchStatus === 'fetching' || currentOfferFetchStatus === 'idle') {
+    return <Spinner/>;
+  }
 
   if (!currentOffer) {
     return (<PageNotFoundScreen/>);
   }
 
+  const nearPlacesLocations = nearPlaces.map((offer) => ({
+    ...offer.location,
+    id: offer.id
+  }));
+  nearPlacesLocations.push({
+    ...currentOffer.location,
+    id: currentOffer.id,
+  });
+
   const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city, isFavorite} = currentOffer;
+
   return (
     <>
       <Helmet>
@@ -36,7 +66,7 @@ function OfferScreen(): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {
-                images.slice(0,6).map((image) => (
+                images.slice(0,MAX_PICTURE_COUNT).map((image) => (
                   <div className="offer__image-wrapper" key={image}>
                     <img className="offer__image" src={image} alt="Photo studio" />
                   </div>

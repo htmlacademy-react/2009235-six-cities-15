@@ -1,9 +1,10 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { setActiveCityAction, setHoverOfferIdAction, setSortOptionAction, requireAuthorizationAction } from './action';
-import { Offers } from '../types/offers';
+import { Offer, Offers } from '../types/offers';
 import { AuthorizationStatus, CityName, SortOptions } from '../const';
-import { fetchLoginUserAction as fetchLoginUserAction, fetchOffersAction, fetchUserAction } from './api-actions';
+import { fetchLoginUserAction as fetchLoginUserAction, fetchOfferAction, fetchOffersAction, fetchReviewUserAction, fetchUserAction } from './api-actions';
 import { UserData } from '../types/auth';
+import { Reviews } from '../types/reviews';
 //import { offers } from '../mocks/offers';
 
 type AppState = {
@@ -11,6 +12,10 @@ type AppState = {
   hoverOfferId: string | null;
   activeSortOption: SortOptions;
   offers: Offers;
+  currentOffer: Offer | null;
+  currentOfferFetchStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
+  reviews: Reviews;
+  nearPlaces: Offers;
   pageStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
   authorizationStatus: AuthorizationStatus;
   userData: UserData | null;
@@ -21,6 +26,10 @@ const initialState:AppState = {
   hoverOfferId: null,
   activeSortOption: SortOptions.POPULAR,
   offers: [],
+  currentOffer: null,
+  currentOfferFetchStatus: 'idle',
+  reviews: [],
+  nearPlaces: [],
   pageStatus: 'idle',
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
@@ -47,6 +56,24 @@ export const reducer = createReducer(initialState, (builder) => {
       state.offers = action.payload;
       state.pageStatus = 'succeeded';
     })
+
+    //Offer
+    .addCase(fetchOfferAction.pending, (state) => {
+      state.currentOfferFetchStatus = 'fetching';
+    })
+    .addCase(fetchOfferAction.rejected, (state) => {
+      state.currentOfferFetchStatus = 'failed';
+    })
+    .addCase(fetchOfferAction.fulfilled, (state, action) => {
+      state.currentOffer = action.payload.currentOffer;
+      state.reviews = action.payload.reviews;
+      state.nearPlaces = action.payload.nearPlaces;
+      state.currentOfferFetchStatus = 'succeeded';
+    })
+    .addCase(fetchReviewUserAction.fulfilled, (state, action) => {
+      state.reviews.push(action.payload);
+    })
+
 
     //Login
     .addCase(requireAuthorizationAction, (state, action) => {
