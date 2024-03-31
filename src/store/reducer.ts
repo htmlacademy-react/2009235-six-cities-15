@@ -5,19 +5,19 @@ import { AuthorizationStatus, CityName, SortOptions } from '../const';
 import { fetchLoginUserAction as fetchLoginUserAction, fetchOfferAction, fetchOffersAction, fetchReviewUserAction, fetchUserAction } from './api-actions';
 import { UserData } from '../types/auth';
 import { Reviews } from '../types/reviews';
-//import { offers } from '../mocks/offers';
+import { Nullable } from '../types/common';
 
 type AppState = {
   activeCityName: CityName;
-  hoverOfferId: string | null;
+  hoverOfferId: Nullable<string>;
   activeSortOption: SortOptions;
   offers: Offers;
-  currentOffer: Offer | null;
+  currentOffer: Nullable<Offer>;
   reviews: Reviews;
   nearPlaces: Offers;
   pageStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
   authorizationStatus: AuthorizationStatus;
-  userData: UserData | null;
+  userData: Nullable<UserData>;
 };
 
 const initialState:AppState = {
