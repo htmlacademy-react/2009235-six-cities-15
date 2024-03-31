@@ -1,19 +1,19 @@
-import { useAppSelector } from '../../../hooks/redux';
+import { Reviews } from '../../../types/reviews';
 import { formatDate } from '../../../utils/format-date/format-date';
 import StarsRating from '../../common/stars-rating/stars-rating';
 import UserInfo from '../../common/user-info/user-info';
 
-const MAX_REVIEWS_COUNT: number = 10;
+type OfferReviewsListProps = {
+  reviews: Reviews;
+}
 
-function OfferReviewsList(): JSX.Element {
-  const reviews = useAppSelector((state) => state.reviews);
-
+function ReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
   return (
     <>
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviews.length}</span></h2>
       <ul className="reviews__list">
         {
-          reviews.slice(-MAX_REVIEWS_COUNT).map((review) => {
+          reviews.map((review) => {
             const {id, user, rating, comment, date} = review;
             const commentDate = formatDate(date);
 
@@ -36,4 +36,4 @@ function OfferReviewsList(): JSX.Element {
   );
 }
 
-export default OfferReviewsList;
+export default ReviewsList;

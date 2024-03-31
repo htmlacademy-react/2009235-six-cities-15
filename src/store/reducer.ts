@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { setActiveCityAction, setHoverOfferIdAction, setSortOptionAction, requireAuthorizationAction } from './action';
+import { setActiveCityAction, setHoverOfferIdAction, setSortOptionAction, setAuthorizationStatusAction } from './action';
 import { Offer, Offers } from '../types/offers';
 import { AuthorizationStatus, CityName, SortOptions } from '../const';
 import { fetchLoginUserAction as fetchLoginUserAction, fetchOfferAction, fetchOffersAction, fetchReviewUserAction, fetchUserAction } from './api-actions';
@@ -13,7 +13,6 @@ type AppState = {
   activeSortOption: SortOptions;
   offers: Offers;
   currentOffer: Offer | null;
-  currentOfferFetchStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
   reviews: Reviews;
   nearPlaces: Offers;
   pageStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
@@ -27,7 +26,6 @@ const initialState:AppState = {
   activeSortOption: SortOptions.POPULAR,
   offers: [],
   currentOffer: null,
-  currentOfferFetchStatus: 'idle',
   reviews: [],
   nearPlaces: [],
   pageStatus: 'idle',
@@ -59,16 +57,16 @@ export const reducer = createReducer(initialState, (builder) => {
 
     //Offer
     .addCase(fetchOfferAction.pending, (state) => {
-      state.currentOfferFetchStatus = 'fetching';
+      state.pageStatus = 'fetching';
     })
     .addCase(fetchOfferAction.rejected, (state) => {
-      state.currentOfferFetchStatus = 'failed';
+      state.pageStatus = 'failed';
     })
     .addCase(fetchOfferAction.fulfilled, (state, action) => {
       state.currentOffer = action.payload.currentOffer;
       state.reviews = action.payload.reviews;
       state.nearPlaces = action.payload.nearPlaces;
-      state.currentOfferFetchStatus = 'succeeded';
+      state.pageStatus = 'succeeded';
     })
     .addCase(fetchReviewUserAction.fulfilled, (state, action) => {
       state.reviews.push(action.payload);
@@ -76,8 +74,11 @@ export const reducer = createReducer(initialState, (builder) => {
 
 
     //Login
-    .addCase(requireAuthorizationAction, (state, action) => {
+    .addCase(setAuthorizationStatusAction, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(fetchLoginUserAction.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
     })
     .addCase(fetchLoginUserAction.fulfilled, (state, action) => {
       state.userData = action.payload;

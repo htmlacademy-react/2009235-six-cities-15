@@ -1,41 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosError, AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import { Offer, Offers } from '../types/offers';
 import { APIRoute } from '../const';
 import { UserAuthData, UserData } from '../types/auth';
 import { saveToken } from '../services/token';
-import { toast } from 'react-toastify';
 import { NewReview, Review, Reviews } from '../types/reviews';
 import { State } from '../types/state';
+import { displayFetchError } from '../utils/display-fetch-error/display-fetch-error';
 
 type ThunkApiConfig = {
   extra: AxiosInstance;
   state: State;
-};
-
-type ErrorResponse = {
-  errorType: string;
-  message: string;
-  details: [{
-    property: string;
-    value: string;
-    messages: [string];
-  }];
-};
-
-const getFetchErrorMessage = (err: unknown) => {
-  if (err instanceof AxiosError) {
-    const responseCode = err.response?.status;
-    const responseData = err.response?.data as ErrorResponse;
-
-    switch (true) {
-      case(responseCode === 400):
-        responseData.details.map((detail) => detail.messages.map((message) => toast.error(`${responseCode}: ${message}`)));
-        break;
-      default:
-        toast.error(`${responseCode}: ${responseData.message}`);
-    }
-  }
 };
 
 /*===== OFFER(S) =====*/
@@ -73,7 +48,7 @@ export const fetchReviewUserAction = createAsyncThunk<Review, NewReview, ThunkAp
       const {data} = await api.post<Review>(`${APIRoute.Reviews}/${offerId}`, newReview);
       return data;
     } catch (err) {
-      getFetchErrorMessage(err);
+      displayFetchError(err);
       throw err;
     }
   },
@@ -88,7 +63,7 @@ export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, Thu
       saveToken(data.token);
       return data;
     } catch (err) {
-      getFetchErrorMessage(err);
+      displayFetchError(err);
       throw err;
     }
   },

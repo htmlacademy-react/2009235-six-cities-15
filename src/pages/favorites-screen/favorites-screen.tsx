@@ -7,7 +7,6 @@ import FavoritesEmpty from '../../components/favorites-screen/favorites-empty/fa
 function FavoritesScreen(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const favoritesOffers = offers.filter(({ isFavorite }) => isFavorite);
-  const isFavoritesOffersEmpty = favoritesOffers.length === 0;
 
   return (
     <>
@@ -15,7 +14,7 @@ function FavoritesScreen(): JSX.Element {
         <title>6 cities: favorites</title>
       </Helmet>
       {
-        isFavoritesOffersEmpty ? <FavoritesEmpty/> : (
+        !favoritesOffers.length ? <FavoritesEmpty/> : (
           <main className="page__main page__main--favorites">
             <div className="page__favorites-container container">
               <section className="favorites">

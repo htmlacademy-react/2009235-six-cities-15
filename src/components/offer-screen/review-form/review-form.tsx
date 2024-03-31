@@ -1,4 +1,4 @@
-import React, { FormEvent, Fragment, useEffect, useRef, useState } from 'react';
+import React, { FormEvent, Fragment, useRef, useState } from 'react';
 import { Rates } from '../../../const';
 import { useAppDispatch } from '../../../hooks/redux';
 import { fetchReviewUserAction } from '../../../store/api-actions';
@@ -7,22 +7,14 @@ import './styles.css';
 const MIN_COMMENT_LENGTH: number = 50;
 const MAX_COMMENT_LENGTH: number = 300;
 
-function OfferReviewForm(): JSX.Element {
+function ReviewForm(): JSX.Element {
   const formRef = useRef<HTMLFormElement>(null);
   const [ formData, setFormData] = useState({
     comment: '',
     rating: NaN
   });
 
-  const [isSubmitDisabled, setSubmitDisabled] = useState(false);
-
-  useEffect(() => {
-    setSubmitDisabled(
-      Number.isNaN(formData.rating)
-      || formData.comment.length < MIN_COMMENT_LENGTH
-      || formData.comment.length > MAX_COMMENT_LENGTH
-    );
-  }, [formData]);
+  const isSubmitDisabled = Number.isNaN(formData.rating) || formData.comment.length < MIN_COMMENT_LENGTH || formData.comment.length > MAX_COMMENT_LENGTH;
 
   const handleCommentChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData({
@@ -43,24 +35,18 @@ function OfferReviewForm(): JSX.Element {
     rating: NaN
   });
 
-  const toggleFormDisabled = (state: 'unblocked' | 'blocked'): void => {
+  const toggleFormDisabled = () => {
     formRef.current?.classList.toggle('form-disable');
-
-    if (state === 'blocked') {
-      setSubmitDisabled(true);
-    } else {
-      setSubmitDisabled(false);
-    }
   };
 
   const dispatch = useAppDispatch();
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    toggleFormDisabled('blocked');
-    dispatch(fetchReviewUserAction(formData)).unwrap()
+    toggleFormDisabled();
+    dispatch(fetchReviewUserAction(formData))
       .then(resetForm)
-      .finally(() => toggleFormDisabled('unblocked'));
+      .finally(toggleFormDisabled);
   };
 
   return (
@@ -114,4 +100,4 @@ function OfferReviewForm(): JSX.Element {
   );
 }
 
-export default OfferReviewForm;
+export default ReviewForm;

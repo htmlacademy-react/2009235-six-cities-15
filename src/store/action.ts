@@ -4,4 +4,4 @@ import { AuthorizationStatus, CityName, SortOptions } from '../const';
 export const setActiveCityAction = createAction<CityName>('setActiveCity');
 export const setHoverOfferIdAction = createAction<string | null>('setHoverOfferId');
 export const setSortOptionAction = createAction<SortOptions>('setSortOption');
-export const requireAuthorizationAction = createAction<AuthorizationStatus>('user/requireAuthorization');
+export const setAuthorizationStatusAction = createAction<AuthorizationStatus>('setAuthorizationStatus');

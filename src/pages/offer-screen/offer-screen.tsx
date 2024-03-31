@@ -21,7 +21,7 @@ const MAX_NEAR_PLACES_COUNT: number = 3;
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const currentOffer = useAppSelector((state) => state.currentOffer);
-  const currentOfferFetchStatus = useAppSelector((state) => state.currentOfferFetchStatus);
+  const pageStatus = useAppSelector((state) => state.pageStatus);
   const nearPlaces = useAppSelector((state) => state.nearPlaces).slice(0, MAX_NEAR_PLACES_COUNT);
 
   const dispatch = useAppDispatch();
@@ -37,7 +37,7 @@ function OfferScreen(): JSX.Element {
     };
   }, [id]);
 
-  if (currentOfferFetchStatus === 'fetching' || currentOfferFetchStatus === 'idle') {
+  if (pageStatus === 'fetching' || pageStatus === 'idle') {
     return <Spinner/>;
   }
 
