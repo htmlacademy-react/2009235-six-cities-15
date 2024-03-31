@@ -7,7 +7,7 @@ type OfferReviewsListProps = {
   reviews: Reviews;
 }
 
-function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
+function ReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
   return (
     <>
       <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviews.length}</span></h2>
@@ -36,4 +36,4 @@ function OfferReviewsList({reviews}: OfferReviewsListProps): JSX.Element {
   );
 }
 
-export default OfferReviewsList;
+export default ReviewsList;

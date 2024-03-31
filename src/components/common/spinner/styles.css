@@ -1,0 +1,10 @@
+.spinner-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  flex: 1 0 auto;
+  padding-top: 80px;
+  padding-bottom: 150px;
+}

@@ -1,0 +1,4 @@
+.form-disable {
+  pointer-events: none;
+  filter: grayscale(100%);
+}

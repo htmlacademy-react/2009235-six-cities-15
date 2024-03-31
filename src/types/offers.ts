@@ -37,6 +37,7 @@ export type OfferDetail = {
   maxAdults: number;
 };
 
+export type OfferDetails = Omit<OfferCard & OfferDetail, 'previewImage'>[];
 //для GET /six-cities/offers/{offerId} убрать "previewImage" !!!
 //через Omit (когда бутет запрашиваться информация по конкретному предложению с сервера)
 

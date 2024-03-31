@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -12,15 +12,13 @@ import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 import MarginIfScroll from '../../utils/margin-if-scroll/margin-if-scroll';
 
 function App(): JSX.Element {
-  const authorizationStatus = AuthorizationStatus.Auth;
-
   return (
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop/>
         <MarginIfScroll/>
         <Routes>
-          <Route path={AppRoute.Main} element={<Layout authorizationStatus={authorizationStatus}/>}>
+          <Route path={AppRoute.Main} element={<Layout/>}>
             <Route
               index
               element={<MainScreen/>}
@@ -32,7 +30,7 @@ function App(): JSX.Element {
             <Route
               path={AppRoute.Favorites}
               element={
-                <PrivateRoute authorizationStatus={authorizationStatus}>
+                <PrivateRoute>
                   <FavoritesScreen/>
                 </PrivateRoute>
               }

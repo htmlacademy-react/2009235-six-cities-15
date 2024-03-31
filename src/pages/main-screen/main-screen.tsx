@@ -7,6 +7,7 @@ import OffersEmpty from '../../components/main-screen/offers-empty/offers-empty'
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/redux';
 import { CityName } from '../../const';
+import Spinner from '../../components/common/spinner/spinner';
 
 function MainScreen(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
@@ -15,6 +16,9 @@ function MainScreen(): JSX.Element {
   const offersByCity = offers.filter((offer) => offer.city.name as CityName === activeCityName);
   const isOffersEmpty = offersByCity.length === 0;
   const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
+
+  const pageStatus = useAppSelector((state) => state.pageStatus);
+
 
   return (
     <>
@@ -26,7 +30,13 @@ function MainScreen(): JSX.Element {
         <LocationsTadsList/>
         <div className="cities">
           {
-            isOffersEmpty ? <OffersEmpty cityName={activeCityName}/> : (
+            isOffersEmpty && pageStatus === 'fetching' && <Spinner/>
+          }
+          {
+            isOffersEmpty && pageStatus !== 'fetching' && <OffersEmpty cityName={activeCityName}/>
+          }
+          {
+            !isOffersEmpty && pageStatus !== 'fetching' && (
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>

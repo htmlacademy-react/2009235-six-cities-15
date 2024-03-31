@@ -1,17 +1,18 @@
-import { useAppSelector } from '../../../hooks/redux';
+import { Offers } from '../../../types/offers';
 import OfferCard from '../../common/offer-card/offer-card';
 
+type FavoriteOfferCardListProps = {
+  offers: Offers;
+}
 
-function FavoriteOfferCardList(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const favoritesOffers = offers.filter(({ isFavorite }) => isFavorite);
+function FavoriteOfferCardList({offers}: FavoriteOfferCardListProps): JSX.Element {
   const citiesNames = [...new Set(offers.map((offer) => offer.city.name))];
 
   return (
     <ul className="favorites__list">
       {
         citiesNames.map((cityName) => {
-          const favoritesOffersByCity = favoritesOffers.filter((offer) => offer.city.name === cityName);
+          const favoritesOffersByCity = offers.filter((offer) => offer.city.name === cityName);
 
           return (
             <li className="favorites__locations-items" key={cityName}>
