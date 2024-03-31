@@ -14,10 +14,14 @@ function OfferReviewForm(): JSX.Element {
     rating: NaN
   });
 
-  const [isSubmitDisabled, setSubmitDisabled] = useState(true);
+  const [isSubmitDisabled, setSubmitDisabled] = useState(false);
 
   useEffect(() => {
-    setSubmitDisabled(Number.isNaN(formData.rating) || formData.comment.length < MIN_COMMENT_LENGTH || formData.comment.length > MAX_COMMENT_LENGTH);
+    setSubmitDisabled(
+      Number.isNaN(formData.rating)
+      || formData.comment.length < MIN_COMMENT_LENGTH
+      || formData.comment.length > MAX_COMMENT_LENGTH
+    );
   }, [formData]);
 
   const handleCommentChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -39,19 +43,24 @@ function OfferReviewForm(): JSX.Element {
     rating: NaN
   });
 
-  const toggleFormDisabled = () => {
+  const toggleFormDisabled = (state: 'unblocked' | 'blocked'): void => {
     formRef.current?.classList.toggle('form-disable');
-    setSubmitDisabled(!isSubmitDisabled);
+
+    if (state === 'blocked') {
+      setSubmitDisabled(true);
+    } else {
+      setSubmitDisabled(false);
+    }
   };
 
   const dispatch = useAppDispatch();
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    toggleFormDisabled();
+    toggleFormDisabled('blocked');
     dispatch(fetchReviewUserAction(formData)).unwrap()
       .then(resetForm)
-      .finally(toggleFormDisabled);
+      .finally(() => toggleFormDisabled('unblocked'));
   };
 
   return (
