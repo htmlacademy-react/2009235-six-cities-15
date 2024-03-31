@@ -84,6 +84,9 @@ export const reducer = createReducer(initialState, (builder) => {
       state.userData = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
     })
+    .addCase(fetchUserAction.rejected, (state) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+    })
     .addCase(fetchUserAction.fulfilled, (state, action) => {
       state.userData = action.payload;
       state.authorizationStatus = AuthorizationStatus.Auth;
