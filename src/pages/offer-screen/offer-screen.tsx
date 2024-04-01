@@ -11,38 +11,41 @@ import Map from '../../components/common/map/map';
 import BookmarkButton from '../../components/common/bookmark-button/bookmark-button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useEffect } from 'react';
-import { setHoverOfferIdAction } from '../../store/action';
 import { fetchOfferAction} from '../../store/api-actions';
 import Spinner from '../../components/common/spinner/spinner';
+import { getCurrentOffer, getNearPlaces, getPageStatus } from '../../store/offers-data/selectors';
+import { appDataActions } from '../../store/app-data/slise';
+//import { offersDataActions } from '../../store/offers-data/slice';
 
 const MAX_PICTURE_COUNT: number = 6;
 const MAX_NEAR_PLACES_COUNT: number = 3;
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const pageStatus = useAppSelector((state) => state.pageStatus);
-  const nearPlaces = useAppSelector((state) => state.nearPlaces).slice(0, MAX_NEAR_PLACES_COUNT);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const pageStatus = useAppSelector(getPageStatus);
+  const nearPlaces = useAppSelector(getNearPlaces).slice(0, MAX_NEAR_PLACES_COUNT);
 
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     if (id) {
       dispatch(fetchOfferAction(id));
-      dispatch(setHoverOfferIdAction(id));
+      dispatch(appDataActions.setHoverOfferIdAction(id));
     }
 
     return () => {
-      dispatch(setHoverOfferIdAction(null));
+      dispatch(appDataActions.setHoverOfferIdAction(null));
     };
   }, [id]);
 
-  if (pageStatus === 'fetching' || pageStatus === 'idle') {
-    return <Spinner/>;
+  if (pageStatus === 'failed') {
+    //ломается потому что состояние меняется для main
+    //dispatch(offersDataActions.resetPageStatus());
+    return (<PageNotFoundScreen/>);
   }
 
-  if (!currentOffer) {
-    return (<PageNotFoundScreen/>);
+  if (pageStatus === 'fetching' || !currentOffer) {
+    return <Spinner/>;
   }
 
   const nearPlacesLocations = nearPlaces.map((offer) => ({
@@ -54,7 +57,21 @@ function OfferScreen(): JSX.Element {
     id: currentOffer.id,
   });
 
-  const {title, isPremium, images, rating, type, bedrooms, maxAdults, price, goods, host, description, city, isFavorite} = currentOffer;
+  const {
+    title,
+    isPremium,
+    images,
+    rating,
+    type,
+    bedrooms,
+    maxAdults,
+    price,
+    goods,
+    host,
+    description,
+    city,
+    isFavorite
+  } = currentOffer;
 
   return (
     <>
@@ -127,7 +144,7 @@ function OfferScreen(): JSX.Element {
           />
         </section>
         <div className="container">
-          <OfferNearPlacesList offers={nearPlaces} />
+          <OfferNearPlacesList offers={nearPlaces}/>
         </div>
       </main>
     </>

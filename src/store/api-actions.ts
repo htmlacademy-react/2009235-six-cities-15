@@ -44,7 +44,7 @@ export const fetchReviewUserAction = createAsyncThunk<Review, NewReview, ThunkAp
   async (newReview, {extra: api, getState}) => {
     try {
       const state = getState();
-      const offerId = state.currentOffer?.id;
+      const offerId = state.offersData.currentOffer?.id;
       const {data} = await api.post<Review>(`${APIRoute.Reviews}/${offerId}`, newReview);
       return data;
     } catch (err) {

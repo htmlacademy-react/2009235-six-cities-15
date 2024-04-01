@@ -7,7 +7,8 @@ import PremiumLabel from '../premium-label/premium-label';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../hooks/redux';
-import { setHoverOfferIdAction } from '../../../store/action';
+import { appDataActions } from '../../../store/app-data/slise';
+import { Nullable } from '../../../types/common';
 
 const variantConfig = {
   vertical: {
@@ -30,10 +31,12 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
   const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
   const {width, height} = variantConfig[variant];
+  const isHoverEnabled = classNamePrefix === 'cities';
 
   const dispatch = useAppDispatch();
-  const handleOnMouseEnter = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(id)) : undefined;
-  const handleOnMouseLeave = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(null)) : undefined;
+  const handleHoverId = (offerId: Nullable<string>) => isHoverEnabled ? dispatch(appDataActions.setHoverOfferIdAction(offerId)) : undefined;
+  const handleOnMouseEnter = () => handleHoverId(id);
+  const handleOnMouseLeave = () => handleHoverId(null);
 
   return (
     <article

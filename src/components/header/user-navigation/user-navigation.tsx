@@ -2,10 +2,11 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useAuth } from '../../../hooks/use-auth';
 import { useAppSelector } from '../../../hooks/redux';
+import { getUserData } from '../../../store/auth-data/selectors';
 
 function UserNavigation(): JSX.Element {
   const {isAuth} = useAuth();
-  const userData = useAppSelector((state) => state.userData);
+  const userData = useAppSelector(getUserData);
 
   return (
     <nav className="header__nav">
