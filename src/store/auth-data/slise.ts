@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../../const';
 import { UserData } from '../../types/auth';
 import { Nullable } from '../../types/common';
-import { fetchLoginUserAction, fetchUserAction } from '../api-actions';
+import { fetchLoginUserAction, fetchLogoutUserAction, fetchUserAction } from '../api-actions';
 
 type AuthState = {
   authorizationStatus: AuthorizationStatus;
@@ -37,6 +37,10 @@ export const authData = createSlice({
       .addCase(fetchUserAction.fulfilled, (state, action) => {
         state.userData = action.payload;
         state.authorizationStatus = AuthorizationStatus.Auth;
+      })
+      .addCase(fetchLogoutUserAction.fulfilled, (state) => {
+        state.userData = null;
+        state.authorizationStatus = AuthorizationStatus.NoAuth;
       });
   },
 });

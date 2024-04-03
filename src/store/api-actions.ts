@@ -3,10 +3,11 @@ import { AxiosInstance } from 'axios';
 import { Offer, Offers } from '../types/offers';
 import { APIRoute } from '../const';
 import { UserAuthData, UserData } from '../types/auth';
-import { saveToken } from '../services/token';
+import { dropToken, saveToken } from '../services/token';
 import { NewReview, Review, Reviews } from '../types/reviews';
 import { State } from '../types/state';
 import { displayFetchError } from '../utils/display-fetch-error/display-fetch-error';
+import { toast } from 'react-toastify';
 
 type ThunkApiConfig = {
   extra: AxiosInstance;
@@ -76,14 +77,16 @@ export const fetchFavoritesOfferStatusAction = createAsyncThunk<Offer, Offer, Th
 );
 
 
-/*===== LOGIN =====*/
+/*===== LOG(IN/OUT) =====*/
 export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, ThunkApiConfig>(
   'data/fetchLoginUserAction',
   async (userAuthData, {extra: api, dispatch}) => {
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, userAuthData);
       dispatch(fetchFavoritesOffersAction());
+      dispatch(fetchOffersAction());
       saveToken(data.token);
+      toast.success('You are logged in');
       return data;
     } catch (err) {
       displayFetchError(err);
@@ -98,5 +101,15 @@ export const fetchUserAction = createAsyncThunk<UserData, undefined, ThunkApiCon
     const {data} = await api.get<UserData>(APIRoute.Login);
     dispatch(fetchFavoritesOffersAction());
     return data;
+  },
+);
+
+export const fetchLogoutUserAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
+  'data/fetchLogoutUserAction',
+  async (_, {extra: api, dispatch}) => {
+    await api.delete(APIRoute.Logout);
+    dropToken();
+    dispatch(fetchOffersAction());
+    toast.info('You are logged out');
   },
 );

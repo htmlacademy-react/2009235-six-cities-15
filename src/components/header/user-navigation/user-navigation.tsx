@@ -1,14 +1,21 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useAuth } from '../../../hooks/use-auth';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { getUserData } from '../../../store/auth-data/selectors';
 import { getFavoritesOffers } from '../../../store/offers-data/selectors';
+import { fetchLogoutUserAction } from '../../../store/api-actions';
+import './styles.css';
 
 function UserNavigation(): JSX.Element {
   const {isAuth} = useAuth();
   const userData = useAppSelector(getUserData);
   const favoritesOffers = useAppSelector(getFavoritesOffers);
+
+  const dispatch = useAppDispatch();
+  const handleSignOut = () => {
+    dispatch(fetchLogoutUserAction());
+  };
 
   return (
     <nav className="header__nav">
@@ -30,9 +37,9 @@ function UserNavigation(): JSX.Element {
               </Link>
             </li>
             <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
+              <button className="header__nav-link" onClick={handleSignOut}>
                 <span className="header__signout">Sign out</span>
-              </a>
+              </button>
             </li>
           </>
         )}

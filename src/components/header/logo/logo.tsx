@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import classNames from 'classnames';
-import { memo } from 'react';
 
 type LogoProps = {
   isMainPage?: boolean;
@@ -23,4 +22,4 @@ function Logo({isMainPage = false}:LogoProps): JSX.Element {
   );
 }
 
-export default memo(Logo);
+export default Logo;
