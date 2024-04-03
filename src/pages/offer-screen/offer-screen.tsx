@@ -11,10 +11,11 @@ import Map from '../../components/common/map/map';
 import BookmarkButton from '../../components/common/bookmark-button/bookmark-button';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { useEffect } from 'react';
-import { fetchOfferAction} from '../../store/api-actions';
+import { fetchFavoritesOfferStatusAction, fetchOfferAction} from '../../store/api-actions';
 import Spinner from '../../components/common/spinner/spinner';
 import { getCurrentOffer, getNearPlaces, getPageStatus } from '../../store/offers-data/selectors';
 import { appDataActions } from '../../store/app-data/slise';
+import { offersDataActions } from '../../store/offers-data/slice';
 //import { offersDataActions } from '../../store/offers-data/slice';
 
 const MAX_PICTURE_COUNT: number = 6;
@@ -35,8 +36,24 @@ function OfferScreen(): JSX.Element {
 
     return () => {
       dispatch(appDataActions.setHoverOfferIdAction(null));
+      dispatch(offersDataActions.resetCurrentOffer());
     };
   }, [id]);
+  /*
+  useEffect(() => {
+    if (pageStatus === 'failed') {
+      dispatch(offersDataActions.resetPageStatus());
+    }
+  }, [pageStatus]); //из-за состояния запрос отправляется дважды!!!
+
+  if (pageStatus !== 'fetching' && pageStatus !== 'succeeded' && !currentOffer) {
+    return (<PageNotFoundScreen/>);
+  }
+
+  if (pageStatus === 'fetching' || !currentOffer) {
+    return <Spinner/>;
+  }
+  */
 
   if (pageStatus === 'failed') {
     //ломается потому что состояние меняется для main
@@ -73,6 +90,10 @@ function OfferScreen(): JSX.Element {
     isFavorite
   } = currentOffer;
 
+  const handleBookmarkButtonClick = () => {
+    dispatch(fetchFavoritesOfferStatusAction(currentOffer));
+  };
+
   return (
     <>
       <Helmet>
@@ -98,7 +119,7 @@ function OfferScreen(): JSX.Element {
                 <h1 className="offer__name">
                   {title}
                 </h1>
-                <BookmarkButton isFavorite={isFavorite} classNamePrefix='offer' variant='big'/>
+                <BookmarkButton isFavorite={isFavorite} classNamePrefix='offer' variant='big' onButtonClick={handleBookmarkButtonClick}/>
               </div>
               <StarsRating rating={rating} classNamePrefix='offer' variant='full'/>
               <ul className="offer__features">

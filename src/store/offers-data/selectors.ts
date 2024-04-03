@@ -10,6 +10,7 @@ export const getPageStatus = (state:OffersDataState) => state.offersData.pageSta
 export const getCurrentOffer = (state:OffersDataState) => state.offersData.currentOffer;
 export const getNearPlaces = (state:OffersDataState) => state.offersData.nearPlaces;
 export const getReviews = (state:OffersDataState) => state.offersData.reviews;
+export const getFavoritesOffers = (state:OffersDataState) => state.offersData.favoritesOffers;
 
 export const getOffersByCity = createSelector(
   getOffers,

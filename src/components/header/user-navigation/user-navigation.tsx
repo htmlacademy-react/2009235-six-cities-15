@@ -3,10 +3,12 @@ import { AppRoute } from '../../../const';
 import { useAuth } from '../../../hooks/use-auth';
 import { useAppSelector } from '../../../hooks/redux';
 import { getUserData } from '../../../store/auth-data/selectors';
+import { getFavoritesOffers } from '../../../store/offers-data/selectors';
 
 function UserNavigation(): JSX.Element {
   const {isAuth} = useAuth();
   const userData = useAppSelector(getUserData);
+  const favoritesOffers = useAppSelector(getFavoritesOffers);
 
   return (
     <nav className="header__nav">
@@ -24,7 +26,7 @@ function UserNavigation(): JSX.Element {
                 >
                 </div>
                 <span className="header__user-name user__name">{userData?.email}</span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">{favoritesOffers.length}</span>
               </Link>
             </li>
             <li className="header__nav-item">

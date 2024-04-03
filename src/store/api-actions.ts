@@ -22,6 +22,7 @@ export const fetchOffersAction = createAsyncThunk<Offers, undefined, ThunkApiCon
   },
 );
 
+/*------*/
 type fetchOfferActionData = {
   currentOffer: Offer;
   reviews: Reviews;
@@ -54,12 +55,34 @@ export const fetchReviewUserAction = createAsyncThunk<Review, NewReview, ThunkAp
   },
 );
 
+/*===== FAVORITE =====*/
+export const fetchFavoritesOffersAction = createAsyncThunk<Offers, undefined, ThunkApiConfig>(
+  'data/fetchFavoritesOffersAction',
+  async (_arg, {extra: api}) => {
+    const {data} = await api.get<Offers>(APIRoute.FavoritesOffers);
+    return data;
+  },
+);
+
+
+export const fetchFavoritesOfferStatusAction = createAsyncThunk<Offer, Offer, ThunkApiConfig>(
+  'data/fetchFavoritesOfferAction',
+  async (offer, {extra: api}) => {
+    const isFavoriteOffer = offer.isFavorite ? 0 : 1;
+    const offerId = offer.id;
+    const {data} = await api.post<Offer>(`${APIRoute.FavoritesOffers}/${offerId}/${isFavoriteOffer}`);
+    return data;
+  },
+);
+
+
 /*===== LOGIN =====*/
 export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, ThunkApiConfig>(
   'data/fetchLoginUserAction',
-  async (userAuthData, {extra: api}) => {
+  async (userAuthData, {extra: api, dispatch}) => {
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, userAuthData);
+      dispatch(fetchFavoritesOffersAction());
       saveToken(data.token);
       return data;
     } catch (err) {
@@ -71,8 +94,9 @@ export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, Thu
 
 export const fetchUserAction = createAsyncThunk<UserData, undefined, ThunkApiConfig>(
   'data/fetchUserAction',
-  async (_arg, {extra: api}) => {
+  async (_arg, {extra: api, dispatch}) => {
     const {data} = await api.get<UserData>(APIRoute.Login);
+    dispatch(fetchFavoritesOffersAction());
     return data;
   },
 );

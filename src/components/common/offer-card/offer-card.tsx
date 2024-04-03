@@ -9,6 +9,7 @@ import classNames from 'classnames';
 import { useAppDispatch } from '../../../hooks/redux';
 import { appDataActions } from '../../../store/app-data/slise';
 import { Nullable } from '../../../types/common';
+import { fetchFavoritesOfferStatusAction } from '../../../store/api-actions';
 
 const variantConfig = {
   vertical: {
@@ -37,6 +38,9 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
   const handleHoverId = (offerId: Nullable<string>) => isHoverEnabled ? dispatch(appDataActions.setHoverOfferIdAction(offerId)) : undefined;
   const handleOnMouseEnter = () => handleHoverId(id);
   const handleOnMouseLeave = () => handleHoverId(null);
+  const handleBookmarkButtonClick = () => {
+    dispatch(fetchFavoritesOfferStatusAction(offer));
+  };
 
   return (
     <article
@@ -53,7 +57,7 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
       <div className={classNames('place-card__info', {'place-card__info': variant === 'horizontal'})}>
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} classNamePrefix='place-card'/>
-          <BookmarkButton isFavorite={isFavorite}/>
+          <BookmarkButton isFavorite={isFavorite} onButtonClick={handleBookmarkButtonClick}/>
         </div>
         <StarsRating rating={rating} classNamePrefix='place-card'/>
         <h2 className="place-card__name">
