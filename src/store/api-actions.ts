@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { Offer, Offers } from '../types/offers';
-import { APIRoute } from '../const';
+import { APIRoute, AppRoute } from '../const';
 import { UserAuthData, UserData } from '../types/auth';
 import { dropToken, saveToken } from '../services/token';
 import { NewReview, Review, Reviews } from '../types/reviews';
 import { State } from '../types/state';
 import { displayFetchError } from '../utils/display-fetch-error/display-fetch-error';
 import { toast } from 'react-toastify';
+import { redirectToRoute } from './actions';
 
 type ThunkApiConfig = {
   extra: AxiosInstance;
@@ -110,6 +111,7 @@ export const fetchLogoutUserAction = createAsyncThunk<void, undefined, ThunkApiC
     await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(fetchOffersAction());
+    dispatch(redirectToRoute(AppRoute.Main));
     toast.info('You are logged out');
   },
 );

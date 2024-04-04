@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
@@ -10,11 +10,13 @@ import PrivateRoute from '../private-route/private-route';
 import Layout from '../layout/layout';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 import MarginIfScroll from '../../utils/margin-if-scroll/margin-if-scroll';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollToTop/>
         <MarginIfScroll/>
         <Routes>
@@ -38,7 +40,7 @@ function App(): JSX.Element {
             <Route path="*" element={<PageNotFoundScreen/>}/>
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }
