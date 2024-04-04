@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import leaflet, { Map } from 'leaflet';
 import { Location } from '../../../types/offers';
+import { Nullable } from '../../../types/common';
 
 const TILE_LAYER = 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
 const COPYRIGHT = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>';
 
 type MapController = {
-  mapRef: React.MutableRefObject<HTMLElement | null>;
+  mapRef: React.MutableRefObject<Nullable<HTMLElement>>;
   city: Location;
 };
 
 export function useMap({ mapRef, city }: MapController) {
-  const [map, setMap] = useState<Map | null>(null);
+  const [map, setMap] = useState<Nullable<Map>>(null);
   const isRenderedRef = useRef(false);
   const { latitude: lat, longitude: lng, zoom } = city;
 

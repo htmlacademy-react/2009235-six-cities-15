@@ -1,4 +1,5 @@
 import { AuthorizationStatus } from '../const';
+import { getAuthorizationStatus } from '../store/auth-data/selectors';
 import { useAppSelector } from './redux';
 
 type Auth = {
@@ -6,7 +7,7 @@ type Auth = {
 }
 
 export function useAuth(): Auth {
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
   return {
     isAuth: authStatus === AuthorizationStatus.Auth,
   };

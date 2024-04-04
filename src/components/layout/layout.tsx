@@ -1,8 +1,11 @@
 import { Outlet, useLocation } from 'react-router-dom';
 import { AppRoute} from '../../const';
 import Header from '../header/header';
+import { useAppSelector } from '../../hooks/redux';
+import { getFavoritesOffers } from '../../store/offers-data/selectors';
+import { Offers } from '../../types/offers';
 
-const getLayoutState = (pathname: AppRoute) => {
+const getLayoutState = (pathname: AppRoute, favoritesOffers: Offers) => {
   let isMainPage = false;
   let isLoginPage = false;
   let rootClassName = '';
@@ -17,19 +20,19 @@ const getLayoutState = (pathname: AppRoute) => {
       rootClassName = ' page--gray page--login';
       break;
     case AppRoute.Favorites:
-      rootClassName = ' page__main--favorites';
+      if (favoritesOffers.length === 0) {
+        rootClassName = ' page--favorites-empty';
+      }
       break;
   }
-  /*page__main page__main--favorites page__main--favorites-empty
-  добавить клаасс стр. с отсутсвием избранных предложений
-  */
 
   return {isMainPage, isLoginPage, rootClassName};
 };
 
 function Layout(): JSX.Element {
   const {pathname} = useLocation();
-  const {isMainPage, isLoginPage, rootClassName} = getLayoutState(pathname as AppRoute);
+  const favoritesOffers = useAppSelector(getFavoritesOffers);
+  const {isMainPage, isLoginPage, rootClassName} = getLayoutState(pathname as AppRoute, favoritesOffers);
 
   return (
     <div className={`page${rootClassName}`}>
