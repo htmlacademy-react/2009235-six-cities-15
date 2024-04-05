@@ -1,12 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks/redux';
-import { getIsFavoritesOffers } from '../../store/offers-data/selectors';
+import { getIsFavoritesOffersEmpty } from '../../store/offers-data/selectors';
 
 
 export function useLayout(){
   const {pathname} = useLocation();
-  const isFavoritesOffers = useAppSelector(getIsFavoritesOffers);
+  const isFavoritesOffersEmpty = useAppSelector(getIsFavoritesOffersEmpty);
 
   let isMainPage = false;
   let isLoginPage = false;
@@ -22,7 +22,7 @@ export function useLayout(){
       rootClassName = ' page--gray page--login';
       break;
     case AppRoute.Favorites:
-      if (!isFavoritesOffers) {
+      if (isFavoritesOffersEmpty) {
         rootClassName = ' page--favorites-empty';
       }
       break;

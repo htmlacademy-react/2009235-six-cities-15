@@ -14,6 +14,7 @@ type OffersState = {
   favoritesOffers: Offers;
   pageStatus: PageStatus;
   offerPageStatus: PageStatus;
+  favoritesOffersPageStatus: PageStatus;
 };
 
 const initialState:OffersState = {
@@ -24,6 +25,7 @@ const initialState:OffersState = {
   favoritesOffers: [],
   pageStatus: 'idle',
   offerPageStatus: 'idle',
+  favoritesOffersPageStatus: 'idle',
 };
 
 export const offersData = createSlice({
@@ -74,14 +76,14 @@ export const offersData = createSlice({
 
     //FavoriteOffers
       .addCase(fetchFavoritesOffersAction.pending, (state) => {
-        state.pageStatus = 'fetching';
+        state.favoritesOffersPageStatus = 'fetching';
       })
       .addCase(fetchFavoritesOffersAction.fulfilled, (state, action) => {
         state.favoritesOffers = action.payload;
-        state.pageStatus = 'succeeded';
+        state.favoritesOffersPageStatus = 'succeeded';
       })
       .addCase(fetchFavoritesOffersAction.rejected, (state) => {
-        state.pageStatus = 'failed';
+        state.favoritesOffersPageStatus = 'failed';
       })
 
       .addCase(fetchFavoritesOfferStatusAction.fulfilled, (state, action) => {

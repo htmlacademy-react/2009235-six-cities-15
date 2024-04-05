@@ -3,10 +3,17 @@ import Footer from '../../components/footer/footer';
 import FavoriteOfferCardList from '../../components/favorites-screen/favorite-offer-card-list/favorite-offer-card-list';
 import { useAppSelector } from '../../hooks/redux';
 import FavoritesEmpty from '../../components/favorites-screen/favorites-empty/favorites-empty';
-import { getFavoritesOffers } from '../../store/offers-data/selectors';
+import { getFavoritesOffers, getFavoritesOffersPageStatus } from '../../store/offers-data/selectors';
+import Spinner from '../../components/common/spinner/spinner';
+
 
 function FavoritesScreen(): JSX.Element {
   const favoritesOffers = useAppSelector(getFavoritesOffers);
+  const favoritesOffersPageStatus = useAppSelector(getFavoritesOffersPageStatus);
+
+  if (favoritesOffersPageStatus === 'fetching') {
+    return <Spinner/>;
+  }
 
   return (
     <>
