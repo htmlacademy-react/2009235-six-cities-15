@@ -3,7 +3,6 @@ import { Location } from '../../../types/offers';
 import useMap from './use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
 import './styles.css';
 import { useAppSelector } from '../../../hooks/redux';
 import { getHoverOfferId } from '../../../store/app-data/selectors';

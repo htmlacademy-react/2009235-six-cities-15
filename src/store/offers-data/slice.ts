@@ -4,13 +4,16 @@ import { Offer, Offers } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import { fetchFavoritesOfferStatusAction, fetchFavoritesOffersAction, fetchOfferAction, fetchOffersAction, fetchReviewUserAction } from '../api-actions';
 
+type PageStatus = 'idle' | 'fetching' | 'succeeded' | 'failed';
+
 type OffersState = {
   offers: Offers;
   currentOffer: Nullable<Offer>;
   reviews: Reviews;
   nearPlaces: Offers;
   favoritesOffers: Offers;
-  pageStatus: 'idle' | 'fetching' | 'succeeded' | 'failed';
+  pageStatus: PageStatus;
+  offerPageStatus: PageStatus;
 };
 
 const initialState:OffersState = {
@@ -20,6 +23,7 @@ const initialState:OffersState = {
   nearPlaces: [],
   favoritesOffers: [],
   pageStatus: 'idle',
+  offerPageStatus: 'idle',
 };
 
 export const offersData = createSlice({
@@ -27,6 +31,9 @@ export const offersData = createSlice({
   initialState,
   reducers: {
     resetPageStatus: (state) => {
+      state.pageStatus = 'idle';
+    },
+    resetOfferPageStatus: (state) => {
       state.pageStatus = 'idle';
     },
     resetCurrentOffer: (state) => {
@@ -49,16 +56,16 @@ export const offersData = createSlice({
 
     //Offer
       .addCase(fetchOfferAction.pending, (state) => {
-        state.pageStatus = 'fetching';
+        state.offerPageStatus = 'fetching';
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.currentOffer = action.payload.currentOffer;
         state.reviews = action.payload.reviews;
         state.nearPlaces = action.payload.nearPlaces;
-        state.pageStatus = 'succeeded';
+        state.offerPageStatus = 'succeeded';
       })
       .addCase(fetchOfferAction.rejected, (state) => {
-        state.pageStatus = 'failed';
+        state.offerPageStatus = 'failed';
       })
 
       .addCase(fetchReviewUserAction.fulfilled, (state, action) => {
