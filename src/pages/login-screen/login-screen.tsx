@@ -6,6 +6,7 @@ import { fetchLoginUserAction } from '../../store/api-actions';
 import { useAuth } from '../../hooks/use-auth';
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import Header from '../../components/header/header';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -24,10 +25,11 @@ function LoginScreen(): JSX.Element {
   }
 
   return (
-    <>
+    <div className='page--gray page--login'>
       <Helmet>
         <title>6 cities: authorization</title>
       </Helmet>
+      <Header/>
       <main className="page__main page__main--login">
         <div className="page__login-container container">
           <section className="login">
@@ -53,7 +55,7 @@ function LoginScreen(): JSX.Element {
           </section>
         </div>
       </main>
-    </>
+    </div>
   );
 }
 

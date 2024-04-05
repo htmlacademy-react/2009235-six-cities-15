@@ -4,9 +4,14 @@ import { useAppDispatch } from '../../hooks/redux';
 import { offersDataActions } from '../../store/offers-data/slice';
 import { useParams } from 'react-router-dom';
 import { APIErrors } from '../../const';
+import Header from '../../components/header/header';
+import './styles.css';
 
+type ErrorScreenProps = {
+  variant?: 'message' | 'screen';
+};
 
-function ErrorScreen(): JSX.Element {
+function ErrorScreen({variant = 'screen'}: ErrorScreenProps): JSX.Element {
   const {code} = useParams();
   const errorCode = code as APIErrors ?? APIErrors.Server404;
 
@@ -16,7 +21,7 @@ function ErrorScreen(): JSX.Element {
   switch (errorCode) {
     case APIErrors.Server404:
       errorTitle = 'Page not found';
-      errorDescription = 'Oops...';
+      errorDescription = 'Page not found';
       break;
     case APIErrors.Server500:
       errorTitle = 'Internal Server Error';
@@ -37,10 +42,13 @@ function ErrorScreen(): JSX.Element {
   , []);
 
   return (
-    <>
+    <div className='page page--error'>
       <Helmet>
         <title>6 cities: error</title>
       </Helmet>
+      {
+        variant === 'screen' && <Header/>
+      }
       <main className="page__main">
         <h1 className="visually-hidden">{errorTitle}</h1>
         <section className="container">
@@ -50,7 +58,7 @@ function ErrorScreen(): JSX.Element {
           </div>
         </section>
       </main>
-    </>
+    </div>
   );
 }
 

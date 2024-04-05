@@ -9,6 +9,7 @@ import { useAppSelector } from '../../hooks/redux';
 import Spinner from '../../components/common/spinner/spinner';
 import { getOffersByCity, getPageStatus } from '../../store/offers-data/selectors';
 import { getActiveCityName } from '../../store/app-data/selectors';
+import Header from '../../components/header/header';
 
 function MainScreen(): JSX.Element {
   const activeCityName = useAppSelector(getActiveCityName);
@@ -21,10 +22,11 @@ function MainScreen(): JSX.Element {
 
 
   return (
-    <>
+    <div className='page page--gray page--main'>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
+      <Header isMainPage={!false}/>
       <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isOffersEmpty})}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTadsList/>
@@ -58,7 +60,7 @@ function MainScreen(): JSX.Element {
           }
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
