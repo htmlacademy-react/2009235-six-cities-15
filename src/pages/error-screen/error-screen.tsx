@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/redux';
 import { offersDataActions } from '../../store/offers-data/slice';
 import { useParams } from 'react-router-dom';
 import { APIErrors } from '../../const';
-
+import './styles.css';
 
 function ErrorScreen(): JSX.Element {
   const {code} = useParams();
@@ -16,7 +16,7 @@ function ErrorScreen(): JSX.Element {
   switch (errorCode) {
     case APIErrors.Server404:
       errorTitle = 'Page not found';
-      errorDescription = 'Oops...';
+      errorDescription = 'Oops... Not found';
       break;
     case APIErrors.Server500:
       errorTitle = 'Internal Server Error';
@@ -41,7 +41,7 @@ function ErrorScreen(): JSX.Element {
       <Helmet>
         <title>6 cities: error</title>
       </Helmet>
-      <main className="page__main">
+      <main className="page page--error">
         <h1 className="visually-hidden">{errorTitle}</h1>
         <section className="container">
           <div className="cities__status-wrapper tabs__content" style={{ paddingBottom: 100}}>
