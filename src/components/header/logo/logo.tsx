@@ -1,18 +1,17 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import classNames from 'classnames';
+import { memo } from 'react';
 
 type LogoProps = {
-  isMainPage?: boolean;
+  isMainPage: boolean;
 }
 
-function Logo({isMainPage = false}:LogoProps): JSX.Element {
-  const linkClassName = classNames('header__logo-link', { 'header__logo-link--active': isMainPage });
-
+function Logo({isMainPage}:LogoProps): JSX.Element {
   return (
     <div className="header__left">
       <Link
-        className={linkClassName}
+        className={classNames('header__logo-link', { 'header__logo-link--active': isMainPage })}
         to={AppRoute.Main}
         style={isMainPage ? {pointerEvents: 'none'} : undefined}
       >
@@ -22,4 +21,4 @@ function Logo({isMainPage = false}:LogoProps): JSX.Element {
   );
 }
 
-export default Logo;
+export default memo(Logo);

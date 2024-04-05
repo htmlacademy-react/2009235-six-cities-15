@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { SortOptions } from '../../../const';
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { useOffersSortingForm } from './use-offers-sorting-form';
 
 
@@ -38,4 +38,4 @@ function OffersSortingForm(): JSX.Element {
   );
 }
 
-export default OffersSortingForm;
+export default memo(OffersSortingForm);

@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../hooks/redux';
 import { appDataActions } from '../../../store/app-data/slise';
 import { Nullable } from '../../../types/common';
 import { fetchFavoritesOfferStatusAction } from '../../../store/api-actions';
+import { memo } from 'react';
 
 const variantConfig = {
   vertical: {
@@ -69,4 +70,4 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);
