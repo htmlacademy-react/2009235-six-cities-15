@@ -3,25 +3,26 @@ import { Helmet } from 'react-helmet-async';
 import { useAppDispatch } from '../../hooks/redux';
 import { offersDataActions } from '../../store/offers-data/slice';
 import { useParams } from 'react-router-dom';
+import { APIErrors } from '../../const';
 
 
 function ErrorScreen(): JSX.Element {
   const {code} = useParams();
-  const errorCode = code ?? '404';
+  const errorCode = code as APIErrors ?? APIErrors.Server404;
 
   let errorTitle;
   let errorDescription;
 
   switch (errorCode) {
-    case '404':
+    case APIErrors.Server404:
       errorTitle = 'Page not found';
       errorDescription = 'Oops...';
       break;
-    case '500':
+    case APIErrors.Server500:
       errorTitle = 'Internal Server Error';
       errorDescription = 'Sorry, something went wrong.';
       break;
-    case 'ERR_NETWORK':
+    case APIErrors.Network:
       errorTitle = 'Network is unreachable';
       errorDescription = 'Please, check the connection';
       break;

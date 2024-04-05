@@ -43,3 +43,9 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+export enum APIErrors {
+  Server404 = '404',
+  Server500 = '500',
+  Network = 'ERR_NETWORK',
+}
