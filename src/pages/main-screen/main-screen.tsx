@@ -26,7 +26,7 @@ function MainScreen(): JSX.Element {
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header isMainPage={!false}/>
+      <Header/>
       <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isOffersEmpty})}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTadsList/>
