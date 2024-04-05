@@ -19,3 +19,4 @@ export const getOffersByCity = createSelector(
   (offers, activeCityName) => offers.filter((offer) => offer.city.name as CityName === activeCityName)
 );
 
+export const getIsFavoritesOffers = createSelector(getFavoritesOffers, (favoritesOffers) => favoritesOffers.length > 0);

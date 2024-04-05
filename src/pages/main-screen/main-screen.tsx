@@ -12,13 +12,10 @@ import { getActiveCityName } from '../../store/app-data/selectors';
 
 function MainScreen(): JSX.Element {
   const activeCityName = useAppSelector(getActiveCityName);
-
   const offersByCity = useAppSelector(getOffersByCity);
   const isOffersEmpty = offersByCity.length === 0;
   const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
-
   const pageStatus = useAppSelector(getPageStatus);
-
 
   return (
     <>
