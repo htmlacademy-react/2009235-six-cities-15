@@ -105,7 +105,7 @@ export const offersData = createSlice({
           state.favoritesOffers = state.favoritesOffers.filter((offer) => offer.id !== updatedOffer.id);
         }
 
-        if (state.currentOffer !== null) {
+        if (state.currentOffer) {
           if (state.currentOffer.id === updatedOffer.id) {
             state.currentOffer.isFavorite = updatedOffer.isFavorite;
           }
