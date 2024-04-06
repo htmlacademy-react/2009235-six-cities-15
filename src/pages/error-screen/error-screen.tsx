@@ -4,18 +4,9 @@ import { useAppDispatch } from '../../hooks/redux';
 import { offersDataActions } from '../../store/offers-data/slice';
 import { useParams } from 'react-router-dom';
 import { APIErrors } from '../../const';
-<<<<<<< HEAD
-import Header from '../../components/header/header';
 import './styles.css';
 
-type ErrorScreenProps = {
-  variant?: 'message' | 'screen';
-};
-=======
-import './styles.css';
->>>>>>> module8-task1-1
-
-function ErrorScreen({variant = 'screen'}: ErrorScreenProps): JSX.Element {
+function ErrorScreen(): JSX.Element {
   const {code} = useParams();
   const errorCode = code as APIErrors ?? APIErrors.Server404;
 
@@ -25,11 +16,7 @@ function ErrorScreen({variant = 'screen'}: ErrorScreenProps): JSX.Element {
   switch (errorCode) {
     case APIErrors.Server404:
       errorTitle = 'Page not found';
-<<<<<<< HEAD
-      errorDescription = 'Page not found';
-=======
       errorDescription = 'Oops... Not found';
->>>>>>> module8-task1-1
       break;
     case APIErrors.Server500:
       errorTitle = 'Internal Server Error';
@@ -50,18 +37,11 @@ function ErrorScreen({variant = 'screen'}: ErrorScreenProps): JSX.Element {
   , []);
 
   return (
-    <div className='page page--error'>
+    <>
       <Helmet>
         <title>6 cities: error</title>
       </Helmet>
-<<<<<<< HEAD
-      {
-        variant === 'screen' && <Header/>
-      }
-      <main className="page__main">
-=======
       <main className="page page--error">
->>>>>>> module8-task1-1
         <h1 className="visually-hidden">{errorTitle}</h1>
         <section className="container">
           <div className="cities__status-wrapper tabs__content" style={{ paddingBottom: 100}}>
@@ -70,7 +50,7 @@ function ErrorScreen({variant = 'screen'}: ErrorScreenProps): JSX.Element {
           </div>
         </section>
       </main>
-    </div>
+    </>
   );
 }
 

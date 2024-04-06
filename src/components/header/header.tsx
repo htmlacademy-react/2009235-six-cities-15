@@ -1,24 +1,12 @@
-import { useLocation } from 'react-router-dom';
 import Logo from './logo/logo';
 import UserNavigation from './user-navigation/user-navigation';
-import { AppRoute } from '../../const';
 
+type HeaderProps = {
+  isMainPage: boolean;
+  isLoginPage: boolean;
+}
 
-function Header(): JSX.Element {
-  const {pathname} = useLocation();
-
-  let isMainPage = false;
-  let isLoginPage = false;
-
-  switch (pathname) {
-    case AppRoute.Main:
-      isMainPage = true;
-      break;
-    case AppRoute.Login:
-      isLoginPage = true;
-      break;
-  }
-
+function Header({isMainPage, isLoginPage}:HeaderProps): JSX.Element {
   return (
     <header className="header">
       <div className="container">

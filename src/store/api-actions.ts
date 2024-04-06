@@ -7,7 +7,6 @@ import { dropToken, saveToken } from '../services/token';
 import { NewReview, Review, Reviews } from '../types/reviews';
 import { State } from '../types/state';
 import { displayFetchError } from '../utils/display-fetch-error/display-fetch-error';
-import { toast } from 'react-toastify';
 import { redirectToRoute } from './actions';
 
 type ThunkApiConfig = {
@@ -87,7 +86,6 @@ export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, Thu
       dispatch(fetchFavoritesOffersAction());
       dispatch(fetchOffersAction());
       saveToken(data.token);
-      toast.success('You are logged in');
       return data;
     } catch (err) {
       displayFetchError(err);
@@ -108,10 +106,9 @@ export const fetchUserAction = createAsyncThunk<UserData, undefined, ThunkApiCon
 export const fetchLogoutUserAction = createAsyncThunk<void, undefined, ThunkApiConfig>(
   'data/fetchLogoutUserAction',
   async (_, {extra: api, dispatch}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(fetchOffersAction());
-    dispatch(redirectToRoute(AppRoute.Main));
-    toast.info('You are logged out');
+    await api.delete(APIRoute.Logout)
+      .then(() => dispatch(redirectToRoute(AppRoute.Main)))
+      .then(dropToken)
+      .then(() => dispatch(fetchOffersAction()));
   },
 );

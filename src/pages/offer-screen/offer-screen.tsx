@@ -15,7 +15,6 @@ import Spinner from '../../components/common/spinner/spinner';
 import { getCurrentOffer, getNearPlaces, getOfferPageStatus } from '../../store/offers-data/selectors';
 import { appDataActions } from '../../store/app-data/slise';
 import { offersDataActions } from '../../store/offers-data/slice';
-import Header from '../../components/header/header';
 import ErrorScreen from '../error-screen/error-screen';
 
 const MAX_PICTURE_COUNT: number = 6;
@@ -41,21 +40,11 @@ function OfferScreen(): JSX.Element {
   }, [id]);
 
   if (offerPageStatus === 'failed') {
-    return (
-      <>
-        <Header />
-        <ErrorScreen variant='message' />
-      </>
-    );
+    return <ErrorScreen/>;
   }
 
   if (offerPageStatus === 'fetching' || !currentOffer) {
-    return (
-      <>
-        <Header />
-        <Spinner/>
-      </>
-    );
+    return <Spinner/>;
   }
 
   const nearPlacesLocations = nearPlaces.map((offer) => ({
@@ -88,11 +77,10 @@ function OfferScreen(): JSX.Element {
   };
 
   return (
-    <div className='page'>
+    <>
       <Helmet>
         <title>6 cities: {title}</title>
       </Helmet>
-      <Header/>
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -162,7 +150,7 @@ function OfferScreen(): JSX.Element {
           <OfferNearPlacesList offers={nearPlaces}/>
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

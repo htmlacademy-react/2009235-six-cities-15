@@ -9,7 +9,6 @@ import { useAppSelector } from '../../hooks/redux';
 import Spinner from '../../components/common/spinner/spinner';
 import { getOffersByCity, getPageStatus } from '../../store/offers-data/selectors';
 import { getActiveCityName } from '../../store/app-data/selectors';
-import Header from '../../components/header/header';
 
 function MainScreen(): JSX.Element {
   const activeCityName = useAppSelector(getActiveCityName);
@@ -19,11 +18,10 @@ function MainScreen(): JSX.Element {
   const pageStatus = useAppSelector(getPageStatus);
 
   return (
-    <div className='page page--gray page--main'>
+    <>
       <Helmet>
         <title>6 cities</title>
       </Helmet>
-      <Header/>
       <main className={classNames('page__main', 'page__main--index', {'page__main--index-empty': isOffersEmpty})}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTadsList/>
@@ -41,9 +39,7 @@ function MainScreen(): JSX.Element {
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{`${offersByCity.length}  places to stay in  ${activeCityName}`}</b>
                   <OffersSortingForm/>
-                  <div className="cities__places-list places__list tabs__content">
-                    <OfferCardList offers={offersByCity}/>
-                  </div>
+                  <OfferCardList offers={offersByCity}/>
                 </section>
                 <div className="cities__right-section">
                   <Map
@@ -57,7 +53,7 @@ function MainScreen(): JSX.Element {
           }
         </div>
       </main>
-    </div>
+    </>
   );
 }
 

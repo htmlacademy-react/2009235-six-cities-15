@@ -11,6 +11,7 @@ import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 import './styles.css';
+import Layout from '../layout/layout';
 
 function App(): JSX.Element {
   return (
@@ -18,21 +19,26 @@ function App(): JSX.Element {
       <HistoryRouter history={browserHistory}>
         <ScrollToTop/>
         <Routes>
-          <Route path={AppRoute.Main} element={<MainScreen/>} />
+          <Route path={AppRoute.Main} element={<Layout/>}>
+            <Route
+              index
+              element={<MainScreen/>}
+            />
 
-          <Route path={AppRoute.Offer} element={<OfferScreen/>} />
-          <Route path={AppRoute.Login} element={<LoginScreen/>} />
+            <Route path={AppRoute.Offer} element={<OfferScreen/>} />
+            <Route path={AppRoute.Login} element={<LoginScreen/>} />
 
-          <Route
-            path={AppRoute.Favorites}
-            element={
-              <PrivateRoute>
-                <FavoritesScreen/>
-              </PrivateRoute>
-            }
-          />
-          <Route path={AppRoute.Error} element={<ErrorScreen/>}/>
-          <Route path="*" element={<ErrorScreen/>}/>
+            <Route
+              path={AppRoute.Favorites}
+              element={
+                <PrivateRoute>
+                  <FavoritesScreen/>
+                </PrivateRoute>
+              }
+            />
+            <Route path={AppRoute.Error} element={<ErrorScreen/>}/>
+            <Route path="*" element={<ErrorScreen/>}/>
+          </Route>
         </Routes>
       </HistoryRouter>
     </HelmetProvider>
