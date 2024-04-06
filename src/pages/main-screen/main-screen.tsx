@@ -13,13 +13,10 @@ import Header from '../../components/header/header';
 
 function MainScreen(): JSX.Element {
   const activeCityName = useAppSelector(getActiveCityName);
-
   const offersByCity = useAppSelector(getOffersByCity);
   const isOffersEmpty = offersByCity.length === 0;
   const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
-
   const pageStatus = useAppSelector(getPageStatus);
-
 
   return (
     <div className='page page--gray page--main'>

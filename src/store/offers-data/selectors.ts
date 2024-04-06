@@ -12,6 +12,7 @@ export const getReviews = (state:OffersDataState) => state.offersData.reviews;
 export const getFavoritesOffers = (state:OffersDataState) => state.offersData.favoritesOffers;
 export const getPageStatus = (state:OffersDataState) => state.offersData.pageStatus;
 export const getOfferPageStatus = (state:OffersDataState) => state.offersData.offerPageStatus;
+export const getFavoritesOffersPageStatus = (state:OffersDataState) => state.offersData.favoritesOffersPageStatus;
 
 export const getOffersByCity = createSelector(
   getOffers,
@@ -19,3 +20,4 @@ export const getOffersByCity = createSelector(
   (offers, activeCityName) => offers.filter((offer) => offer.city.name as CityName === activeCityName)
 );
 
+export const getIsFavoritesOffersEmpty = createSelector(getFavoritesOffers, (favoritesOffers) => favoritesOffers.length === 0);

@@ -3,6 +3,7 @@ import { AppRoute, CityName } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { getActiveCityName } from '../../../store/app-data/selectors';
 import { appDataActions } from '../../../store/app-data/slise';
+import { memo } from 'react';
 
 type LocationTabProps = {
   cityName: CityName;
@@ -27,4 +28,4 @@ function LocationTab({cityName}: LocationTabProps): JSX.Element {
   );
 }
 
-export default LocationTab;
+export default memo(LocationTab);
