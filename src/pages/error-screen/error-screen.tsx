@@ -8,16 +8,12 @@ import './styles.css';
 
 function ErrorScreen(): JSX.Element {
   const {code} = useParams();
-  const errorCode = code as APIErrors ?? APIErrors.Server404;
 
+  let errorCode = code as APIErrors;
   let errorTitle;
   let errorDescription;
 
   switch (errorCode) {
-    case APIErrors.Server404:
-      errorTitle = 'Page not found';
-      errorDescription = 'Oops... Not found';
-      break;
     case APIErrors.Server500:
       errorTitle = 'Internal Server Error';
       errorDescription = 'Sorry, something went wrong.';
@@ -26,6 +22,10 @@ function ErrorScreen(): JSX.Element {
       errorTitle = 'Network is unreachable';
       errorDescription = 'Please, check the connection';
       break;
+    default:
+      errorCode = APIErrors.Server404;
+      errorTitle = 'Page not found';
+      errorDescription = 'Oops... Not found';
   }
 
   const dispatch = useAppDispatch();

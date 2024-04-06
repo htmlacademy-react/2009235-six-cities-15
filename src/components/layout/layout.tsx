@@ -6,7 +6,7 @@ function Layout(): JSX.Element {
   const {isMainPage, isLoginPage, rootClassName} = useLayout();
 
   return (
-    <div className={`page${rootClassName}`}>
+    <div className={`page ${rootClassName}`}>
       <Header
         isMainPage={isMainPage}
         isLoginPage={isLoginPage}

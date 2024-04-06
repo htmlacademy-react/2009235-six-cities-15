@@ -9,9 +9,9 @@ type PrivateRouteProps = {
 }
 
 function PrivateRoute({children}: PrivateRouteProps): JSX.Element {
-  const {isAuth, isAuthorized} = useAuth();
+  const {isAuth, isUnknown} = useAuth();
 
-  if (isAuthorized) {
+  if (isUnknown) {
     return <Spinner/>;
   }
 

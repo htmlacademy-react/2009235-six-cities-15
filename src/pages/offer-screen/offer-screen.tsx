@@ -18,13 +18,12 @@ import { offersDataActions } from '../../store/offers-data/slice';
 import ErrorScreen from '../error-screen/error-screen';
 
 const MAX_PICTURE_COUNT: number = 6;
-const MAX_NEAR_PLACES_COUNT: number = 3;
 
 function OfferScreen(): JSX.Element {
   const {id} = useParams();
   const currentOffer = useAppSelector(getCurrentOffer);
   const offerPageStatus = useAppSelector(getOfferPageStatus);
-  const nearPlaces = useAppSelector(getNearPlaces).slice(0, MAX_NEAR_PLACES_COUNT);
+  const nearPlaces = useAppSelector(getNearPlaces);
 
   const dispatch = useAppDispatch();
   useEffect(() => {

@@ -15,15 +15,15 @@ export function useLayout(){
   switch (pathname) {
     case AppRoute.Main:
       isMainPage = true;
-      rootClassName = ' page--gray page--main';
+      rootClassName = 'page--gray page--main';
       break;
     case AppRoute.Login:
       isLoginPage = true;
-      rootClassName = ' page--gray page--login';
+      rootClassName = 'page--gray page--login';
       break;
     case AppRoute.Favorites:
       if (isFavoritesOffersEmpty) {
-        rootClassName = ' page--favorites-empty';
+        rootClassName = 'page--favorites-empty';
       }
       break;
   }

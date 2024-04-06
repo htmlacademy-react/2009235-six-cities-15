@@ -4,13 +4,13 @@ import { useAppSelector } from './redux';
 
 type Auth = {
   isAuth: boolean;
-  isAuthorized: boolean;
+  isUnknown: boolean;
 }
 
 export function useAuth(): Auth {
   const authStatus = useAppSelector(getAuthorizationStatus);
   return {
     isAuth: authStatus === AuthorizationStatus.Auth,
-    isAuthorized: authStatus === AuthorizationStatus.Unknown,
+    isUnknown: authStatus === AuthorizationStatus.Unknown,
   };
 }
