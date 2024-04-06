@@ -3,6 +3,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
+  Error = '/error/:code',
 }
 
 export enum AuthorizationStatus {
@@ -41,4 +42,10 @@ export enum APIRoute {
   Reviews = '/comments',
   Login = '/login',
   Logout = '/logout',
+}
+
+export enum APIErrors {
+  Server404 = '404',
+  Server500 = '500',
+  Network = 'ERR_NETWORK',
 }

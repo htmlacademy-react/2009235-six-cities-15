@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useAuth } from '../../../hooks/use-auth';
+import { AppRoute } from '../../../const';
+import { useNavigate } from 'react-router-dom';
 
 const variantConfig = {
   small: {
@@ -15,13 +17,21 @@ type BookmarkButtonProps = {
   isFavorite: boolean;
   classNamePrefix?: 'place-card' | 'offer';
   variant?: 'small' | 'big';
+  onButtonClick: () => void;
 }
 
-function BookmarkButton({isFavorite: isActive, classNamePrefix = 'place-card', variant = 'small'}: BookmarkButtonProps): JSX.Element {
-  const [isFavorite, setFavorite] = useState(isActive);
+function BookmarkButton({isFavorite, classNamePrefix = 'place-card', variant = 'small', onButtonClick}: BookmarkButtonProps): JSX.Element {
   const {width, height} = variantConfig[variant];
+  const {isAuth} = useAuth();
 
-  const handleBookmarkButtonClick = () => setFavorite(!isFavorite);
+  const navigate = useNavigate();
+  const handleBookmarkButtonClick = () => {
+    if (isAuth) {
+      onButtonClick();
+    } else {
+      navigate(AppRoute.Login);
+    }
+  };
 
   return (
     <button

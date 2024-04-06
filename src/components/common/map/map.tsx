@@ -3,9 +3,9 @@ import { Location } from '../../../types/offers';
 import useMap from './use-map';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-
 import './styles.css';
 import { useAppSelector } from '../../../hooks/redux';
+import { getHoverOfferId } from '../../../store/app-data/selectors';
 
 const defaultCustomIcon = leaflet.icon({
   iconUrl:  'img/pin.svg',
@@ -28,7 +28,7 @@ type mapProps = {
 function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap({mapRef, city});
-  const selectedPointId = useAppSelector((state) => state.hoverOfferId);
+  const selectedPointId = useAppSelector(getHoverOfferId);
 
   useEffect(() => {
     if (map) {

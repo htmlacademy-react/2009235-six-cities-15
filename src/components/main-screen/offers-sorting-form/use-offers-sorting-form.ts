@@ -1,16 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 import { useEffect, useState } from 'react';
-import { setSortOptionAction } from '../../../store/action';
 import { SortOptions } from '../../../const';
+import { getActiveSortOption } from '../../../store/app-data/selectors';
+import { appDataActions } from '../../../store/app-data/slise';
 
 export function useOffersSortingForm(ref:React.RefObject<HTMLFormElement>){
-  const activeSortOption = useAppSelector((state) => state.activeSortOption);
+  const activeSortOption = useAppSelector(getActiveSortOption);
   const [isOptionsOpened, setOptionsOpened] = useState(false);
   const handleSortOptionsToggleClick = () => setOptionsOpened(!isOptionsOpened);
 
   const dispatch = useAppDispatch();
   const handleOptionClick = (sortOption: SortOptions) => {
-    dispatch(setSortOptionAction(sortOption));
+    dispatch(appDataActions.setSortOptionAction(sortOption));
     setOptionsOpened(false);
   };
 

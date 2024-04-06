@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, CityName } from '../../../const';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { setActiveCityAction } from '../../../store/action';
+import { getActiveCityName } from '../../../store/app-data/selectors';
+import { appDataActions } from '../../../store/app-data/slise';
+import { memo } from 'react';
 
 type LocationTabProps = {
   cityName: CityName;
 }
 
 function LocationTab({cityName}: LocationTabProps): JSX.Element {
-  const activeCityName = useAppSelector((state) => state.activeCityName);
+  const activeCityName = useAppSelector(getActiveCityName);
   const isActiveCity = activeCityName === cityName;
 
   const dispatch = useAppDispatch();
-  const handleTabClick = () => dispatch(setActiveCityAction(cityName));
+  const handleTabClick = () => dispatch(appDataActions.setActiveCityNameAction(cityName));
 
   return (
     <li className="locations__item" onClick={handleTabClick}>
@@ -26,4 +28,4 @@ function LocationTab({cityName}: LocationTabProps): JSX.Element {
   );
 }
 
-export default LocationTab;
+export default memo(LocationTab);

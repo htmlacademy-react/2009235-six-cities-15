@@ -6,19 +6,16 @@ import OffersSortingForm from '../../components/main-screen/offers-sorting-form/
 import OffersEmpty from '../../components/main-screen/offers-empty/offers-empty';
 import classNames from 'classnames';
 import { useAppSelector } from '../../hooks/redux';
-import { CityName } from '../../const';
 import Spinner from '../../components/common/spinner/spinner';
+import { getOffersByCity, getPageStatus } from '../../store/offers-data/selectors';
+import { getActiveCityName } from '../../store/app-data/selectors';
 
 function MainScreen(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const activeCityName = useAppSelector((state) => state.activeCityName);
-
-  const offersByCity = offers.filter((offer) => offer.city.name as CityName === activeCityName);
+  const activeCityName = useAppSelector(getActiveCityName);
+  const offersByCity = useAppSelector(getOffersByCity);
   const isOffersEmpty = offersByCity.length === 0;
   const cityPoints = offersByCity.map(({location, id}) => ({ ...location, id }));
-
-  const pageStatus = useAppSelector((state) => state.pageStatus);
-
+  const pageStatus = useAppSelector(getPageStatus);
 
   return (
     <>
@@ -42,9 +39,7 @@ function MainScreen(): JSX.Element {
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">{`${offersByCity.length}  places to stay in  ${activeCityName}`}</b>
                   <OffersSortingForm/>
-                  <div className="cities__places-list places__list tabs__content">
-                    <OfferCardList offers={offersByCity}/>
-                  </div>
+                  <OfferCardList offers={offersByCity}/>
                 </section>
                 <div className="cities__right-section">
                   <Map

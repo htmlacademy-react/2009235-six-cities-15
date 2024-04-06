@@ -7,7 +7,10 @@ import PremiumLabel from '../premium-label/premium-label';
 import BookmarkButton from '../bookmark-button/bookmark-button';
 import classNames from 'classnames';
 import { useAppDispatch } from '../../../hooks/redux';
-import { setHoverOfferIdAction } from '../../../store/action';
+import { appDataActions } from '../../../store/app-data/slise';
+import { Nullable } from '../../../types/common';
+import { fetchFavoritesOfferStatusAction } from '../../../store/api-actions';
+import { memo } from 'react';
 
 const variantConfig = {
   vertical: {
@@ -30,10 +33,15 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
   const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
   const offerURL = generatePath(AppRoute.Offer, {id});
   const {width, height} = variantConfig[variant];
+  const isHoverEnabled = classNamePrefix === 'cities';
 
   const dispatch = useAppDispatch();
-  const handleOnMouseEnter = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(id)) : undefined;
-  const handleOnMouseLeave = () => (classNamePrefix === 'cities') ? dispatch(setHoverOfferIdAction(null)) : undefined;
+  const handleHoverId = (offerId: Nullable<string>) => isHoverEnabled ? dispatch(appDataActions.setHoverOfferIdAction(offerId)) : undefined;
+  const handleOnMouseEnter = () => handleHoverId(id);
+  const handleOnMouseLeave = () => handleHoverId(null);
+  const handleBookmarkButtonClick = () => {
+    dispatch(fetchFavoritesOfferStatusAction(offer));
+  };
 
   return (
     <article
@@ -50,7 +58,7 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
       <div className={classNames('place-card__info', {'place-card__info': variant === 'horizontal'})}>
         <div className="place-card__price-wrapper">
           <OfferPrice price={price} classNamePrefix='place-card'/>
-          <BookmarkButton isFavorite={isFavorite}/>
+          <BookmarkButton isFavorite={isFavorite} onButtonClick={handleBookmarkButtonClick}/>
         </div>
         <StarsRating rating={rating} classNamePrefix='place-card'/>
         <h2 className="place-card__name">
@@ -62,4 +70,4 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);

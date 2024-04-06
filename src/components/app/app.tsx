@@ -1,22 +1,23 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import MainScreen from '../../pages/main-screen/main-screen';
 import OfferScreen from '../../pages/offer-screen/offer-screen';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
-import PageNotFoundScreen from '../../pages/page-not-found-screen/page-not-found-screen';
+import ErrorScreen from '../../pages/error-screen/error-screen';
 import { HelmetProvider } from 'react-helmet-async';
 import PrivateRoute from '../private-route/private-route';
-import Layout from '../layout/layout';
 import ScrollToTop from '../../utils/scroll-to-top/scroll-to-top';
-import MarginIfScroll from '../../utils/margin-if-scroll/margin-if-scroll';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
+import './styles.css';
+import Layout from '../layout/layout';
 
 function App(): JSX.Element {
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollToTop/>
-        <MarginIfScroll/>
         <Routes>
           <Route path={AppRoute.Main} element={<Layout/>}>
             <Route
@@ -35,10 +36,11 @@ function App(): JSX.Element {
                 </PrivateRoute>
               }
             />
-            <Route path="*" element={<PageNotFoundScreen/>}/>
+            <Route path={AppRoute.Error} element={<ErrorScreen/>}/>
+            <Route path="*" element={<ErrorScreen/>}/>
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

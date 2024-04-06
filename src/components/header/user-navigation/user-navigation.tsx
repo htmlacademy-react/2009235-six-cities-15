@@ -1,35 +1,29 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../../const';
 import { useAuth } from '../../../hooks/use-auth';
-import { useAppSelector } from '../../../hooks/redux';
+import { useAppDispatch } from '../../../hooks/redux';
+import { fetchLogoutUserAction } from '../../../store/api-actions';
+import './styles.css';
+import UserNavigationInfo from '../user-navigation-info/user-navigation-info';
 
 function UserNavigation(): JSX.Element {
   const {isAuth} = useAuth();
-  const userData = useAppSelector((state) => state.userData);
+
+  const dispatch = useAppDispatch();
+  const handleSignOut = () => {
+    dispatch(fetchLogoutUserAction());
+  };
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
         {isAuth && (
           <>
-            <li className="header__nav-item user">
-              <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
-                <div
-                  className="header__avatar-wrapper user__avatar-wrapper"
-                  style={{
-                    backgroundImage: `url(${userData?.avatarUrl})`,
-                    borderRadius: '50%'
-                  }}
-                >
-                </div>
-                <span className="header__user-name user__name">{userData?.email}</span>
-                <span className="header__favorite-count">3</span>
-              </Link>
-            </li>
+            <UserNavigationInfo/>
             <li className="header__nav-item">
-              <a className="header__nav-link" href="#">
+              <button className="header__nav-link" onClick={handleSignOut}>
                 <span className="header__signout">Sign out</span>
-              </a>
+              </button>
             </li>
           </>
         )}
