@@ -4,9 +4,11 @@ import { UserAuthData } from '../../types/auth';
 import { useAppDispatch } from '../../hooks/redux';
 import { fetchLoginUserAction } from '../../store/api-actions';
 import { useAuth } from '../../hooks/use-auth';
-import { Navigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Link, Navigate } from 'react-router-dom';
+import { AppRoute, CityName } from '../../const';
 import { toast } from 'react-toastify';
+import { getRandomInteger } from '../../utils/get-random-integer/get-random-integer';
+import { appDataActions } from '../../store/app-data/slise';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -31,6 +33,10 @@ function LoginScreen(): JSX.Element {
     return <Navigate to={AppRoute.Main}/>;
   }
 
+  const locations = Object.values(CityName);
+  const cityName = locations[getRandomInteger(0, locations.length - 1)];
+  const handleLocationLinkClick = () => dispatch(appDataActions.setActiveCityNameAction(cityName));
+
   return (
     <>
       <Helmet>
@@ -54,9 +60,9 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main} onClick={handleLocationLinkClick}>
+                <span>{cityName}</span>
+              </Link>
             </div>
           </section>
         </div>

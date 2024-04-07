@@ -62,7 +62,7 @@ function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProp
         </div>
         <StarsRating rating={rating} classNamePrefix='place-card'/>
         <h2 className="place-card__name">
-          <a href="#">{title}</a>
+          <Link to={offerURL}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
