@@ -31,7 +31,7 @@ export const createAPI = (): AxiosInstance => {
 
       switch (true) {
         case(err.response?.status === 500):
-          if (pathname !== AppRoute.Login as string) {
+          if (pathname !== AppRoute.Login as string && !pathname.includes(AppRoute.Offer.replace('/:id', ''))) {
             browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Server500));
           }
           break;
