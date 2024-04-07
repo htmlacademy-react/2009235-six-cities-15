@@ -28,7 +28,9 @@ function UserInfo({user, variant}: UserInfoProps) {
           <img className="offer__avatar user__avatar" src={avatarUrl} width={74} height={74} alt={`${name}\`s avatar`} />
         </div>
         <span className="offer__user-name">{name}</span>
-        <span className="offer__user-status">{isPro && 'Pro'}</span>
+        {
+          isPro && <span className="offer__user-status">Pro</span>
+        }
       </div>
     );
   }
