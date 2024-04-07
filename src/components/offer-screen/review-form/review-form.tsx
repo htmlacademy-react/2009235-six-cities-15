@@ -1,4 +1,4 @@
-import React, { FormEvent, Fragment, useRef, useState } from 'react';
+import React, { FormEvent, Fragment, useState } from 'react';
 import { Rates } from '../../../const';
 import { useAppDispatch } from '../../../hooks/redux';
 import { fetchReviewUserAction } from '../../../store/api-actions';
