@@ -6,6 +6,7 @@ import { fetchLoginUserAction } from '../../store/api-actions';
 import { useAuth } from '../../hooks/use-auth';
 import { Navigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { toast } from 'react-toastify';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -16,7 +17,14 @@ function LoginScreen(): JSX.Element {
 
     const formData = new FormData(evt.currentTarget);
     const userAuthData = Object.fromEntries(formData) as UserAuthData;
-    dispatch(fetchLoginUserAction(userAuthData));
+    const {password} = userAuthData;
+    const isValidPassword = RegExp(/\p{L}/,'u').test(password) && /[0-9]/i.test(password);
+
+    if (isValidPassword) {
+      dispatch(fetchLoginUserAction(userAuthData));
+    } else {
+      toast.error('Password no have letter or number!');
+    }
   };
 
   if (isAuth) {

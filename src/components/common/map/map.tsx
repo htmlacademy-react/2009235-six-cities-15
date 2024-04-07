@@ -49,12 +49,10 @@ function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
       }
 
       return () => {
-        if (map && classNamePrefix === 'offer') {
-          map.removeLayer(markersGroup);
-        }
+        map.removeLayer(markersGroup);
       };
     }
-  }, [map, points]);
+  }, [map, points, city]);
 
   useEffect(() => {
     if (map && selectedPointId !== null) {
