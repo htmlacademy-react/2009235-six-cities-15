@@ -44,7 +44,6 @@ export const offersData = createSlice({
   },
   extraReducers(builder) {
     builder
-    //Offers
       .addCase(fetchOffersAction.pending, (state) => {
         state.pageStatus = 'fetching';
       })
@@ -56,7 +55,6 @@ export const offersData = createSlice({
         state.pageStatus = 'failed';
       })
 
-    //Offer
       .addCase(fetchOfferAction.pending, (state) => {
         state.offerPageStatus = 'fetching';
       })
@@ -74,7 +72,6 @@ export const offersData = createSlice({
         state.reviews.push(action.payload);
       })
 
-    //FavoriteOffers
       .addCase(fetchFavoritesOffersAction.pending, (state) => {
         state.favoritesOffersPageStatus = 'fetching';
       })

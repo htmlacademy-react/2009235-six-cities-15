@@ -20,6 +20,9 @@ export const displayFetchError = (err: unknown) => {
       case(responseCode === 400):
         responseData.details.map((detail) => detail.messages.map((message) => toast.error(`${responseCode}: ${message}`)));
         break;
+      case(responseCode === 500):
+        toast.error('500: Internal Server Error');
+        break;
       default:
         toast.error(`${responseCode}: ${responseData.message}`);
     }

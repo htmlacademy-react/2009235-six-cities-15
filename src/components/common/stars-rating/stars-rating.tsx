@@ -16,7 +16,7 @@ function StarsRating({rating, classNamePrefix, variant = 'card'}: StarsRatingPro
 
       {
         variant === 'full' && (
-          <span className={`${classNamePrefix}r__rating-value rating__value`}>{rating}</span>
+          <span className={`${classNamePrefix}__rating-value rating__value`}>{rating}</span>
         )
       }
     </div>

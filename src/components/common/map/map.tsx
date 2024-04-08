@@ -33,6 +33,7 @@ function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       const markersGroup = leaflet.layerGroup().addTo(map);
+      markersGroup.setZIndex(1);
       points.forEach((point) => {
         leaflet
           .marker({
@@ -49,16 +50,15 @@ function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
       }
 
       return () => {
-        if (map && classNamePrefix === 'offer') {
-          map.removeLayer(markersGroup);
-        }
+        map.removeLayer(markersGroup);
       };
     }
-  }, [map, points]);
+  }, [map, points, city]);
 
   useEffect(() => {
     if (map && selectedPointId !== null) {
       const markerCurrentGroup = leaflet.layerGroup().addTo(map);
+      markerCurrentGroup.setZIndex(2);
       const currentPoint = points.find((point) => point.id === selectedPointId);
 
       if (currentPoint) {
@@ -78,7 +78,7 @@ function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
         }
       };
     }
-  }, [map, selectedPointId]);
+  }, [map, points, selectedPointId]);
 
   return (
     <section className={`${classNamePrefix}__map map`} ref={mapRef}/>

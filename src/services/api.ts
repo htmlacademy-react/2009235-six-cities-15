@@ -27,9 +27,13 @@ export const createAPI = (): AxiosInstance => {
   api.interceptors.response.use(
     (response) => response,
     (err : AxiosError) => {
+      const pathname = browserHistory.location.pathname;
+
       switch (true) {
         case(err.response?.status === 500):
-          browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Server500));
+          if (pathname !== AppRoute.Login as string && !pathname.includes(AppRoute.Offer.replace('/:id', ''))) {
+            browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Server500));
+          }
           break;
         case(err.code === 'ERR_NETWORK'):
           browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Network));

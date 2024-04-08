@@ -1,4 +1,9 @@
 .form-disable {
   pointer-events: none;
-  filter: grayscale(100%);
+}
+
+.reviews__submit.form__submit.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
