@@ -14,7 +14,12 @@ type ThunkApiConfig = {
   state: State;
 };
 
-/*===== OFFER(S) =====*/
+type fetchOfferActionData = {
+  currentOffer: Offer;
+  reviews: Reviews;
+  nearPlaces: Offers;
+}
+
 export const fetchOffersAction = createAsyncThunk<Offers, undefined, ThunkApiConfig>(
   'data/fetchOffersAction',
   async (_arg, {extra: api}) => {
@@ -22,13 +27,6 @@ export const fetchOffersAction = createAsyncThunk<Offers, undefined, ThunkApiCon
     return data;
   },
 );
-
-/*------*/
-type fetchOfferActionData = {
-  currentOffer: Offer;
-  reviews: Reviews;
-  nearPlaces: Offers;
-}
 
 export const fetchOfferAction = createAsyncThunk<fetchOfferActionData, string, ThunkApiConfig>(
   'data/fetchOfferAction',
@@ -39,7 +37,6 @@ export const fetchOfferAction = createAsyncThunk<fetchOfferActionData, string, T
     return {currentOffer, reviews, nearPlaces};
   },
 );
-
 
 export const fetchReviewUserAction = createAsyncThunk<Review, NewReview, ThunkApiConfig>(
   'data/fetchReviewUserAction',
@@ -56,7 +53,6 @@ export const fetchReviewUserAction = createAsyncThunk<Review, NewReview, ThunkAp
   },
 );
 
-/*===== FAVORITE =====*/
 export const fetchFavoritesOffersAction = createAsyncThunk<Offers, undefined, ThunkApiConfig>(
   'data/fetchFavoritesOffersAction',
   async (_arg, {extra: api}) => {
@@ -64,7 +60,6 @@ export const fetchFavoritesOffersAction = createAsyncThunk<Offers, undefined, Th
     return data;
   },
 );
-
 
 export const fetchFavoritesOfferStatusAction = createAsyncThunk<Offer, Offer, ThunkApiConfig>(
   'data/fetchFavoritesOfferAction',
@@ -76,8 +71,6 @@ export const fetchFavoritesOfferStatusAction = createAsyncThunk<Offer, Offer, Th
   },
 );
 
-
-/*===== LOG(IN/OUT) =====*/
 export const fetchLoginUserAction = createAsyncThunk<UserData, UserAuthData, ThunkApiConfig>(
   'data/fetchLoginUserAction',
   async (userAuthData, {extra: api, dispatch}) => {
