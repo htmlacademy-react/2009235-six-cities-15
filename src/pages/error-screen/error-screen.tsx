@@ -44,8 +44,8 @@ function ErrorScreen(): JSX.Element {
       <main className="page page--error">
         <h1 className="visually-hidden">{errorTitle}</h1>
         <section className="container">
-          <div className="cities__status-wrapper tabs__content" style={{ paddingBottom: 100}}>
-            <b className="cities__status" style={{fontSize: 60}}>{errorCode}</b>
+          <div className="cities__status-wrapper tabs__content">
+            <b className="cities__status">{errorCode}</b>
             <p className="cities__status-description">{errorDescription}</p>
           </div>
         </section>

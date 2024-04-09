@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, InternalAxiosRequestConfig} from 'axios';
 import {getToken} from './token';
 import browserHistory from '../browser-history';
-import { APIErrors, AppRoute } from '../const';
+import { APIErrors, AppRoute, HTTPResponseStatus } from '../const';
 
 const BACKEND_URL = 'https://15.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;
@@ -30,7 +30,7 @@ export const createAPI = (): AxiosInstance => {
       const pathname = browserHistory.location.pathname;
 
       switch (true) {
-        case(err.response?.status === 500):
+        case(err.response?.status === HTTPResponseStatus.Server500):
           if (pathname !== AppRoute.Login as string && !pathname.includes(AppRoute.Offer.replace('/:id', ''))) {
             browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Server500));
           }
@@ -39,6 +39,7 @@ export const createAPI = (): AxiosInstance => {
           browserHistory.push(AppRoute.Error.replace(':code', APIErrors.Network));
           break;
       }
+
       throw err;
     },
   );

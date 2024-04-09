@@ -37,7 +37,5 @@ export type OfferDetail = {
   maxAdults: number;
 };
 
-export type OfferDetails = Omit<OfferCard & OfferDetail, 'previewImage'>[];
-
 export type Offer = OfferCard & OfferDetail;
 export type Offers = Offer[];
