@@ -29,45 +29,49 @@ type OfferCardProps = {
   variant?: 'vertical' | 'horizontal';
 }
 
-function OfferCard({offer, classNamePrefix, variant = 'vertical'}: OfferCardProps): JSX.Element {
-  const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
-  const offerURL = generatePath(AppRoute.Offer, {id});
-  const {width, height} = variantConfig[variant];
-  const isHoverEnabled = classNamePrefix === 'cities';
+const OfferCard = memo(
+  ({offer, classNamePrefix, variant = 'vertical'}: OfferCardProps): JSX.Element => {
+    const {isPremium, previewImage, price, rating, title, type, id, isFavorite} = offer;
+    const offerURL = generatePath(AppRoute.Offer, {id});
+    const {width, height} = variantConfig[variant];
+    const isHoverEnabled = classNamePrefix === 'cities';
 
-  const dispatch = useAppDispatch();
-  const handleHoverId = (offerId: Nullable<string>) => isHoverEnabled ? dispatch(appDataActions.setHoverOfferIdAction(offerId)) : undefined;
-  const handleOnMouseEnter = () => handleHoverId(id);
-  const handleOnMouseLeave = () => handleHoverId(null);
-  const handleBookmarkButtonClick = () => {
-    dispatch(fetchFavoritesOfferStatusAction(offer));
-  };
+    const dispatch = useAppDispatch();
+    const handleHoverId = (offerId: Nullable<string>) => isHoverEnabled ? dispatch(appDataActions.setHoverOfferIdAction(offerId)) : undefined;
+    const handleOnMouseEnter = () => handleHoverId(id);
+    const handleOnMouseLeave = () => handleHoverId(null);
+    const handleBookmarkButtonClick = () => {
+      dispatch(fetchFavoritesOfferStatusAction(offer));
+    };
 
-  return (
-    <article
-      className={`${classNamePrefix}__card place-card`}
-      onMouseEnter={handleOnMouseEnter}
-      onMouseLeave={handleOnMouseLeave}
-    >
-      <PremiumLabel isPremium={isPremium} classNamePrefix='place-card'/>
-      <div className={`${classNamePrefix}__image-wrapper place-card__image-wrapper`}>
-        <Link to={offerURL}>
-          <img className="place-card__image" src={previewImage} width={width} height={height} alt={title} />
-        </Link>
-      </div>
-      <div className={classNames('place-card__info', {'place-card__info': variant === 'horizontal'})}>
-        <div className="place-card__price-wrapper">
-          <OfferPrice price={price} classNamePrefix='place-card'/>
-          <BookmarkButton isFavorite={isFavorite} onButtonClick={handleBookmarkButtonClick}/>
+    return (
+      <article
+        className={`${classNamePrefix}__card place-card`}
+        onMouseEnter={handleOnMouseEnter}
+        onMouseLeave={handleOnMouseLeave}
+      >
+        <PremiumLabel isPremium={isPremium} classNamePrefix='place-card'/>
+        <div className={`${classNamePrefix}__image-wrapper place-card__image-wrapper`}>
+          <Link to={offerURL}>
+            <img className="place-card__image" src={previewImage} width={width} height={height} alt={title} />
+          </Link>
         </div>
-        <StarsRating rating={rating} classNamePrefix='place-card'/>
-        <h2 className="place-card__name">
-          <Link to={offerURL}>{title}</Link>
-        </h2>
-        <p className="place-card__type">{type}</p>
-      </div>
-    </article>
-  );
-}
+        <div className={classNames('place-card__info', {'place-card__info': variant === 'horizontal'})}>
+          <div className="place-card__price-wrapper">
+            <OfferPrice price={price} classNamePrefix='place-card'/>
+            <BookmarkButton isFavorite={isFavorite} onButtonClick={handleBookmarkButtonClick}/>
+          </div>
+          <StarsRating rating={rating} classNamePrefix='place-card'/>
+          <h2 className="place-card__name">
+            <Link to={offerURL}>{title}</Link>
+          </h2>
+          <p className="place-card__type">{type}</p>
+        </div>
+      </article>
+    );
+  }
+);
 
-export default memo(OfferCard);
+OfferCard.displayName = 'OfferCard';
+
+export default OfferCard;

@@ -9,23 +9,27 @@ type LocationTabProps = {
   cityName: CityName;
 }
 
-function LocationTab({cityName}: LocationTabProps): JSX.Element {
-  const activeCityName = useAppSelector(getActiveCityName);
-  const isActiveCity = activeCityName === cityName;
+const LocationTab = memo(
+  ({cityName}: LocationTabProps): JSX.Element => {
+    const activeCityName = useAppSelector(getActiveCityName);
+    const isActiveCity = activeCityName === cityName;
 
-  const dispatch = useAppDispatch();
-  const handleTabClick = () => dispatch(appDataActions.setActiveCityNameAction(cityName));
+    const dispatch = useAppDispatch();
+    const handleTabClick = () => dispatch(appDataActions.setActiveCityNameAction(cityName));
 
-  return (
-    <li className="locations__item" onClick={handleTabClick}>
-      <Link
-        className={`locations__item-link tabs__item ${isActiveCity && 'tabs__item--active'}`}
-        to={AppRoute.Main}
-      >
-        <span>{cityName}</span>
-      </Link>
-    </li>
-  );
-}
+    return (
+      <li className="locations__item" onClick={handleTabClick}>
+        <Link
+          className={`locations__item-link tabs__item ${isActiveCity && 'tabs__item--active'}`}
+          to={AppRoute.Main}
+        >
+          <span>{cityName}</span>
+        </Link>
+      </li>
+    );
+  }
+);
 
-export default memo(LocationTab);
+LocationTab.displayName = 'LocationTab';
+
+export default LocationTab;
