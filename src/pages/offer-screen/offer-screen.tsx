@@ -36,7 +36,7 @@ function OfferScreen(): JSX.Element {
       dispatch(appDataActions.setHoverOfferIdAction(null));
       dispatch(offersDataActions.resetCurrentOffer());
     };
-  }, [id]);
+  }, [dispatch, id]);
 
   if (offerPageStatus === 'failed') {
     return <ErrorScreen/>;

@@ -34,7 +34,7 @@ function ErrorScreen(): JSX.Element {
       dispatch(offersDataActions.resetPageStatus());
       dispatch(offersDataActions.resetOfferPageStatus());
     }
-  , []);
+  , [dispatch]);
 
   return (
     <>

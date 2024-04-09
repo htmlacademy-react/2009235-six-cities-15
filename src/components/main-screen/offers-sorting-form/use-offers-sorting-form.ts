@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { SortOptions } from '../../../const';
 import { getActiveSortOption } from '../../../store/app-data/selectors';
 import { appDataActions } from '../../../store/app-data/slise';
@@ -28,17 +28,5 @@ export function useOffersSortingForm(ref:React.RefObject<HTMLFormElement>){
     }
   };
 
-  useEffect(() => {
-    if (isOptionsOpened) {
-      document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('click', handleOutsideClick);
-
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-        document.removeEventListener('click', handleOutsideClick);
-      };
-    }
-  }, [isOptionsOpened]);
-
-  return {activeSortOption, isOptionsOpened, handleOptionClick, handleSortOptionsToggleClick};
+  return {activeSortOption, isOptionsOpened, handleOptionClick, handleSortOptionsToggleClick, handleKeyDown, handleOutsideClick};
 }

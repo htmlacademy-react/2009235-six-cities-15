@@ -1,12 +1,24 @@
 import classNames from 'classnames';
 import { SortOptions } from '../../../const';
-import { memo, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { useOffersSortingForm } from './use-offers-sorting-form';
 
 
 function OffersSortingForm(): JSX.Element {
   const sortOptionsRef = useRef<HTMLFormElement>(null);
-  const {activeSortOption, isOptionsOpened, handleOptionClick, handleSortOptionsToggleClick} = useOffersSortingForm(sortOptionsRef);
+  const {activeSortOption, isOptionsOpened, handleOptionClick, handleSortOptionsToggleClick, handleKeyDown, handleOutsideClick} = useOffersSortingForm(sortOptionsRef);
+
+  useEffect(() => {
+    if (isOptionsOpened) {
+      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('click', handleOutsideClick);
+
+      return () => {
+        document.removeEventListener('keydown', handleKeyDown);
+        document.removeEventListener('click', handleOutsideClick);
+      };
+    }
+  }, [handleKeyDown, handleOutsideClick, isOptionsOpened]);
 
   return (
     <form className="places__sorting" action="#" method="get" ref={sortOptionsRef}>

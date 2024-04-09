@@ -53,7 +53,7 @@ function Map({city, classNamePrefix, points}:mapProps): JSX.Element {
         map.removeLayer(markersGroup);
       };
     }
-  }, [map, points, city]);
+  }, [map, points, city, classNamePrefix]);
 
   useEffect(() => {
     if (map && selectedPointId !== null) {
