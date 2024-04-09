@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { HTTPResponseStatus } from '../../const';
 
 type ErrorResponse = {
   errorType: string;
@@ -16,12 +17,12 @@ export const displayFetchError = (err: unknown) => {
     const responseCode = err.response?.status;
     const responseData = err.response?.data as ErrorResponse;
 
-    switch (true) {
-      case(responseCode === 400):
+    switch (responseCode) {
+      case HTTPResponseStatus.Server404:
         responseData.details.map((detail) => detail.messages.map((message) => toast.error(`${responseCode}: ${message}`)));
         break;
-      case(responseCode === 500):
-        toast.error('500: Internal Server Error');
+      case HTTPResponseStatus.Server500:
+        toast.error(`${responseCode}: Internal Server Error`);
         break;
       default:
         toast.error(`${responseCode}: ${responseData.message}`);
